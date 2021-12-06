@@ -8,9 +8,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <!--전화와 메시지를 보내기 위한 퍼미션-->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 전화와 메시지를 보내기 위한 퍼미션 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DIAL_PHONE" />
 
@@ -28,12 +26,14 @@
         android:theme="@style/Theme.P_project_5"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".Drunk_Yes_Activity"></activity>
+        <activity android:name=".Image_Analysis_Activity"></activity>
+        <activity android:name=".Repeat_Fail_Activity" />
+        <activity android:name=".Drunk_No_Activity" />
+        <activity android:name=".Drunk_Yes_Activity" />
         <activity android:name=".Alcohol_Detected_Activity" />
         <activity android:name=".HelpActivity" />
         <activity android:name=".VersionInfoActivity" />
         <activity android:name=".MenuActivity" />
-
         <activity android:name=".HomeActivity" />
         <activity
             android:name=".MainActivity"
@@ -44,7 +44,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -44,7 +44,7 @@
             android:id="@+id/btn_profile_update"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/black"
             android:text="프로필 수정"/>
 
@@ -52,7 +52,7 @@
             android:id="@+id/btn_version_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/black"
             android:text="버전 정보"/>
 
@@ -60,7 +60,7 @@
             android:id="@+id/btn_help"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/black"
             android:text="도움말"/>
 
@@ -68,7 +68,7 @@
             android:id="@+id/btn_logout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/black"
             android:text="로그아웃"/>
 
@@ -76,15 +76,28 @@
             android:id="@+id/btn_alcohol_detect"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="음주가 감지되었을 때"/>
 
         <Button
             android:id="@+id/btn_drunk_yes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="음주 상태로 판별"/>
+
+        <Button
+            android:id="@+id/btn_drunk_no"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="미음주 상태로 판별"/>
+        <Button
+            android:id="@+id/btn_repeat_fail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="테스트 반복 실패"/>
     </LinearLayout>
 
 

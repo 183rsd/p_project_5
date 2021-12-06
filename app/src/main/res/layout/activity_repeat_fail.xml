@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Repeat_Fail_Activity">
+    <LinearLayout
+        android:id="@+id/timeCountLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50sp"
+            android:textColor="#EC0909"
+            android:text="05:00"/>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_repeat_fail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeCountLayout"
+        android:textSize="30sp"
+        android:layout_marginTop="50dp"
+        android:text="테스트 반복 실패로 인해 5분간 테스트를 재진행할 수 없습니다."/>
+    <Button
+        android:id="@+id/btn_test_repeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_repeat_fail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:enabled="false"
+        android:text="테스트 재진행"/>
+</RelativeLayout>

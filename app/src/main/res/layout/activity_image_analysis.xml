@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Image_Analysis_Activity">
+    <LinearLayout
+        android:id="@+id/layout_image_analysis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="20dp">
+
+        <ImageView
+            android:id="@+id/iv_analysis_default"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="200dp"
+            android:layout_margin="10dp"/>
+        <ImageView
+            android:id="@+id/iv_analysis_now"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="200dp"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_image_analysis_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/layout_image_analysis"
+        android:layout_margin="20dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="기존에 등록된 이미지"
+            android:layout_margin="10dp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="지금 찍은 이미지"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_img_analysis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_image_analysis_text"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:text="차주인걸로 확인\n 또는 \n차주가 아닌걸로 확인"/>
+
+    <Button
+        android:id="@+id/go_expression_analysis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_img_analysis"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="해당 사진으로 표정 분석 진행"/>
+
+</RelativeLayout>

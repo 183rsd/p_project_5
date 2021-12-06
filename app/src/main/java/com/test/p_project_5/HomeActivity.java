@@ -233,6 +233,7 @@ public class HomeActivity extends AppCompatActivity {
                     tv_call1.setText(post.getCall1());
                     tv_call2.setText(post.getCall2());
 
+
                 } else{
                     tv_call1.setText("설정안함");
                     tv_call2.setText("설정안함");

@@ -8,6 +8,8 @@ import androidx.core.content.FileProvider;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,6 +33,7 @@ import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -39,6 +43,7 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
 
     private String uid;
     private ImageView iv_default_img, iv_camera;
+    private Button btn_image_analysis;
 
     // 파이어베이스
     private FirebaseAuth mAuth ;
@@ -66,7 +71,7 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference(); // 파이어베이스 realtim database에서 정보 가져오기
 
 
-        iv_default_img = findViewById(R.id.iv_default_img);
+//        iv_default_img = findViewById(R.id.iv_default_img);
 
         // 카메라로 사진 촬영
         iv_camera = findViewById(R.id.iv_camera);
@@ -77,7 +82,30 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
             }
         });
 
+
         getFireBaseProfileImage(uid);
+
+        btn_image_analysis = findViewById(R.id.btn_image_analysis);
+        btn_image_analysis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                Bitmap bitmap = ((BitmapDrawable)iv_camera.getDrawable()).getBitmap();
+                float scale = (float) (1024/(float)bitmap.getWidth());
+                int image_w = (int) (bitmap.getWidth() * scale);
+                int image_h = (int) (bitmap.getHeight() * scale);
+                Bitmap resize = Bitmap.createScaledBitmap(bitmap, image_w, image_h, true);
+                resize.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+
+                Intent intent = new Intent(Alcohol_Detected_Activity.this, Image_Analysis_Activity.class);
+                intent.putExtra("uid", uid); // 사용자 고유 uid
+                intent.putExtra("image", byteArray);
+
+                startActivity(intent);
+
+            }
+        });
     }
 
     //      카메라 캡쳐 함수
@@ -140,6 +168,7 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
         if (requestCode == PICK_FROM_CAMERA) {
             // 카메라를 통해 가져온 사진(크롭된사진) uri는 getRealPathFromUri함수를 통해 절대경로 추출.
             Glide.with(this).load(photoUri).into(iv_camera);
+            btn_image_analysis.setEnabled(true);
 
         }
     }
@@ -163,7 +192,7 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 Log.d("성공", String.valueOf(uri));
-                Glide.with(getApplicationContext()).load(uri).into(iv_default_img);
+//                Glide.with(getApplicationContext()).load(uri).into(iv_default_img);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

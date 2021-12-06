@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MenuActivity extends AppCompatActivity {
-    private Button btn_profile_update, btn_version_info, btn_help, btn_logout, btn_alcohol_detect, btn_drunk_yes;
+    private Button btn_profile_update, btn_version_info, btn_help, btn_logout, btn_alcohol_detect, btn_drunk_yes, btn_drunk_no, btn_repeat_fail;
     private String uid;
     private ImageView iv_user_profile;
     private TextView tv_user_name;
@@ -109,13 +109,32 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        // 음주 상태로 확인 버튼 클릭
+        // 음주 상태 버튼 클릭
         btn_drunk_yes = findViewById(R.id.btn_drunk_yes);
         btn_drunk_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MenuActivity.this, Alcohol_Detected_Activity.class);
+                Intent intent = new Intent(MenuActivity.this, Drunk_Yes_Activity.class);
                 intent.putExtra("uid", uid); // 사용자 고유 uid
+                startActivity(intent);
+            }
+        });
+
+        // 미음주 상태 버튼 클릭
+        btn_drunk_no = findViewById(R.id.btn_drunk_no);
+        btn_drunk_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, Drunk_No_Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_repeat_fail = findViewById(R.id.btn_repeat_fail);
+        btn_repeat_fail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, Repeat_Fail_Activity.class);
                 startActivity(intent);
             }
         });

@@ -23,9 +23,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class Drunk_Yes_Activity extends AppCompatActivity{
     private TextView drunk_tv_call1, drunk_tv_call2;
-    private Button drunk_btn_call1_direct, drunk_btn_call1_dialog, drunk_btn_call2_direct, drunk_btn_call2_dialog;
+    private Button drunk_btn_call1_dialog,drunk_btn_call2_dialog;
 
-    private String uid, call1, call2, tel;
+    String uid, call1, call2, tel;
 
     // 파이어베이스
     private FirebaseAuth mAuth ;
@@ -48,40 +48,19 @@ public class Drunk_Yes_Activity extends AppCompatActivity{
         mAuth = FirebaseAuth.getInstance(); // 유저 계정 정보 가져오기
         mDatabase = FirebaseDatabase.getInstance().getReference(); // 파이어베이스 realtim database에서 정보 가져오기
 
-        drunk_tv_call1 = findViewById(R.id.drunk_tv_call1);
-        drunk_tv_call2 = findViewById(R.id.drunk_tv_call2);
-        drunk_btn_call1_direct = findViewById(R.id.drunk_btn_call1_direct);
-        drunk_btn_call1_dialog = findViewById(R.id.drunk_btn_call1_dialog);
-        drunk_btn_call2_direct = findViewById(R.id.drunk_btn_call2_direct);
-        drunk_btn_call2_dialog = findViewById(R.id.drunk_btn_call2_dialog);
-
-
         readUser(uid);
 
-        call1 = drunk_tv_call1.getText().toString();
-        call2 = drunk_tv_call2.getText().toString();
+        drunk_tv_call1 = (TextView) findViewById(R.id.drunk_tv_call1);
+        drunk_tv_call2 =(TextView) findViewById(R.id.drunk_tv_call2);
 
-        drunk_btn_call1_direct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tel = "tel:" + call1;
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(tel));
-                startActivity(intent);
-            }
-        });
+        drunk_btn_call1_dialog = findViewById(R.id.drunk_btn_call1_dialog);
+        drunk_btn_call2_dialog = findViewById(R.id.drunk_btn_call2_dialog);
+
         drunk_btn_call1_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tel = "tel:" + call1;
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
-                startActivity(intent);
-            }
-        });
-        drunk_btn_call2_direct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tel = "tel:" + call2;
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(tel));
                 startActivity(intent);
             }
         });
@@ -93,6 +72,7 @@ public class Drunk_Yes_Activity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
 
     }
 
@@ -108,10 +88,13 @@ public class Drunk_Yes_Activity extends AppCompatActivity{
                     drunk_tv_call1.setText(post.getCall1());
                     drunk_tv_call2.setText(post.getCall2());
 
+                    call1 = drunk_tv_call1.getText().toString();
+                    call2 = drunk_tv_call2.getText().toString();
+
+
                 } else{
                     drunk_tv_call1.setText("설정안함");
                     drunk_tv_call2.setText("설정안함");
-
                 }
             }
 
