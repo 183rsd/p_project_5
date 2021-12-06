@@ -1,9 +1,12 @@
 package com.test.p_project_5;
 
+import androidx.annotation.Dimension;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,6 +24,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -45,9 +51,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -56,99 +68,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private String TAG="mainTag";
     private FirebaseAuth mAuth; // 파이어베이스 인증 객체
     private int RC_SIGN_IN=123; // 구글 로그인 결과 코드
+    private ImageView iv_logo;
 
-    private EditText login_id, login_pw;
-    private Button btn_login, btn_register;
-    private CheckBox autoLogin_check;
+
     private Context mContext;
     // 뒤로가기
     private BackPressHandler backPressHandler = new BackPressHandler(MainActivity.this);
 
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tedPermission();
 
-        login_id = findViewById(R.id.et_id);
-        login_pw = findViewById(R.id.et_pass);
-        btn_login = findViewById(R.id.btn_login);
-        btn_register = findViewById(R.id.btn_register);
-        autoLogin_check = findViewById(R.id.autoLogin_check);
         mContext = this;
 
-        boolean boo = com.test.p_project_5.PreferenceManager.getBoolean(mContext,"check"); // 로그인 정보 기억하기 체크 유무 확인
-        if(boo){ // 로그인 정보 기억하기 버튼이 체크되어 있으면
-            // PreferencceManager에 저장된 id,pw값을 editText에 세팅
-            login_id.setText(com.test.p_project_5.PreferenceManager.getString(mContext,"user_id"));
-            login_pw.setText(com.test.p_project_5.PreferenceManager.getString(mContext,"password"));
-            autoLogin_check.setChecked(true);
-        }
-
-
-
-        btn_register.setOnClickListener(new View.OnClickListener() { // 회원가입 버튼 클릭
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btn_login.setOnClickListener(new View.OnClickListener() { // 로그인 버튼 클릭
-            @Override
-            public void onClick(View view) {
-                String userID = login_id.getText().toString();
-                String userPW = login_pw.getText().toString();
-
-                // user_id, password 값을 PreferenceManager에 저장 (자동로그인 데이터 저장)
-                com.test.p_project_5.PreferenceManager.setString(mContext,"user_id",userID);
-                com.test.p_project_5.PreferenceManager.setString(mContext,"password",userPW);
-
-                // 저장한 키 값으로 저장된 아이디, 비밀번호를 불러와서 check_user_id, check_password에 저장
-                com.test.p_project_5.PreferenceManager.getString(mContext,"user_id");
-                com.test.p_project_5.PreferenceManager.getString(mContext,"password");
-
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success"); // Login.php파일에서 성공시 "success"를 반환하도록 지정
-                            if(success) { // 로그인 성공
-                                String userID = jsonObject.getString("userID");
-                                String userPass = jsonObject.getString("userPassword");
-                                String userName = jsonObject.getString("userName");
-
-                                if(autoLogin_check.isChecked()){
-                                    SharedPreferences auto = getSharedPreferences("autoLogin", Activity.MODE_PRIVATE);
-                                    SharedPreferences.Editor autoLoginEdit = auto.edit();
-                                    autoLoginEdit.putString("user_id",userID);
-                                    autoLoginEdit.putString("password",userPW);
-                                    autoLoginEdit.commit();
-                                }
-
-                                Toast.makeText(getApplicationContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                intent.putExtra("userName", userName);
-                                startActivity(intent);
-                            } // 회원가입 실패
-                            else{
-                                Toast.makeText(getApplicationContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                // volley를 이용해서 서버로 요청
-                LoginRequest loginRequest = new LoginRequest(userID, userPW, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                queue.add(loginRequest);
-            }
-        });
-
+        iv_logo = (ImageView) findViewById(R.id.iv_logo);
+        Glide.with(this).load(R.raw.logo_gif).into(iv_logo);
 
         // [START config_signin]
         // 구글로그인
@@ -171,21 +112,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         });
 
-        // 자동로그인 체크박스 유무에 따른 동작 구현
-        autoLogin_check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (((CheckBox)view).isChecked()){ // 체크박스 체크되어있으면
-                    // editText에서 아이디, 비밀번호 가져와서 PreferenceManager에 저장
-                    com.test.p_project_5.PreferenceManager.setString(mContext,"user_id",login_id.getText().toString());
-                    com.test.p_project_5.PreferenceManager.setString(mContext,"password",login_pw.getText().toString());
-                    com.test.p_project_5.PreferenceManager.setBoolean(mContext,"check",autoLogin_check.isChecked()); // 현재 체크박스 상태 저장
-                } else{ // 체크박스 해제되어있으면
-                    com.test.p_project_5.PreferenceManager.setBoolean(mContext,"check",autoLogin_check.isChecked()); // 현재 체크박스 상태 저장
-                    com.test.p_project_5. PreferenceManager.clear(mContext); // 로그인 정보 모두 날림
-                }
-            }
-        });
+        TextView textView = (TextView) btn_google.getChildAt(0);
+        textView.setText("Google 계정으로 로그인");
+        textView.setTextSize(Dimension.SP, 20);
 
     }
 
@@ -209,8 +138,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){ // 로그인 성공했을 때
-                            Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+//                            Toast.makeText(MainActivity.this, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                             intent.putExtra("nickname", account.getDisplayName()); // 닉네임
                             intent.putExtra("photoUrl", String.valueOf(account.getPhotoUrl())); // 프로필사진 (포토url을 string으로 변환)
 
@@ -225,13 +154,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
-
-    // 키보드 숨기기
-    private void hideKeyboard(){
-        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(login_id.getWindowToken(),0);
-        imm.hideSoftInputFromWindow(login_pw.getWindowToken(),0);
     }
 
     // 화면 터치 시 키보드 내려감
@@ -263,4 +185,32 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 //        // Toast, 간격 사용자 지정
         backPressHandler.onBackPressed("'뒤로' 버튼 한번 더 누르시면 종료됩니다.",3000);
     }
+
+    // 사진 권한을 위한 테드 퍼미션
+    private void tedPermission() {
+        PermissionListener permissionListener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                // 권한 요청 성공
+
+            }
+
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                // 권한 요청 실패
+            }
+        };
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage(getResources().getString(R.string.permission_2))
+                .setDeniedMessage(getResources().getString(R.string.permission_1))
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .check();
+    }
+
+
+
+
+
+
 }

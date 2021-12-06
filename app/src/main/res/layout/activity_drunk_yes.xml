@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Drunk_Yes_Activity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="음주 상태로 확인되었습니다."/>
+    <TextView
+        android:id="@+id/drunk_tv_call1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="연락처1"/>
+    <Button
+        android:id="@+id/drunk_btn_call1_direct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="즉 시 전 화"/>
+    <Button
+        android:id="@+id/drunk_btn_call1_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전화걸기 다이얼로그"/>
+    <TextView
+        android:id="@+id/drunk_tv_call2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="연락처2"/>
+    <Button
+        android:id="@+id/drunk_btn_call2_direct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="즉 시 전 화"/>
+    <Button
+        android:id="@+id/drunk_btn_call2_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전화걸기 다이얼로그"/>
+
+</LinearLayout>
