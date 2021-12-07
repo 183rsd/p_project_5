@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MenuActivity extends AppCompatActivity {
-    private Button btn_profile_update, btn_version_info, btn_help, btn_logout, btn_alcohol_detect, btn_drunk_yes, btn_drunk_no, btn_repeat_fail;
+    private Button btn_profile_update, btn_version_info, btn_help, btn_logout, btn_alcohol_detect,
+            btn_drunk_yes, btn_drunk_no, btn_repeat_fail, btn_voice_analysis;
     private String uid;
     private ImageView iv_user_profile;
     private TextView tv_user_name;
@@ -32,6 +34,12 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 화면을 landscape(가로) 화면으로 고정
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+
+
         setContentView(R.layout.activity_menu);
 
         Intent intent = getIntent();
@@ -135,6 +143,15 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, Repeat_Fail_Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_voice_analysis = findViewById(R.id.btn_voice_analysis);
+        btn_voice_analysis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, Voice_Analysis_Activity.class);
                 startActivity(intent);
             }
         });

@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -83,13 +84,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 화면을 landscape(가로) 화면으로 고정
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
         tedPermission();
 
         mContext = this;
 
         iv_logo = (ImageView) findViewById(R.id.iv_logo);
-        Glide.with(this).load(R.raw.logo_gif).into(iv_logo);
+
 
         // [START config_signin]
         // 구글로그인

@@ -8,12 +8,16 @@ import androidx.core.content.FileProvider;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -55,13 +59,21 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
     Uri photoUri;
     private static final int PICK_FROM_CAMERA = 2;
 
+    // 로딩
+    Analysis_Loading_Activity customProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 화면을 landscape(가로) 화면으로 고정
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_alcohol_detected);
 
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
+
+        customProgressDialog = new Analysis_Loading_Activity(this);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.getReference();
@@ -89,6 +101,8 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
         btn_image_analysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                customProgressDialog.show();
+
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 Bitmap bitmap = ((BitmapDrawable)iv_camera.getDrawable()).getBitmap();
                 float scale = (float) (1024/(float)bitmap.getWidth());
@@ -98,14 +112,25 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
                 resize.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] byteArray = stream.toByteArray();
 
-                Intent intent = new Intent(Alcohol_Detected_Activity.this, Image_Analysis_Activity.class);
-                intent.putExtra("uid", uid); // 사용자 고유 uid
-                intent.putExtra("image", byteArray);
 
-                startActivity(intent);
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(Alcohol_Detected_Activity.this, Image_Analysis_Activity.class);
+                        intent.putExtra("uid", uid); // 사용자 고유 uid
+                        intent.putExtra("image", byteArray);
+
+                        startActivity(intent);
+
+                    }
+                }, 5000);
+
 
             }
         });
+
+
     }
 
     //      카메라 캡쳐 함수
