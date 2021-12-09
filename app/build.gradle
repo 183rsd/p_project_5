@@ -59,6 +59,7 @@ dependencies {
 
     // 글라이드 이미지 로딩
     implementation 'androidx.navigation:navigation-ui:2.3.5'
+    implementation files('libs\\json-simple-1.1.1.jar')
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
@@ -80,5 +81,7 @@ dependencies {
     // 로딩 애니메이션
     implementation 'com.airbnb.android:lottie:3.5.0'
 
-    
+    //블루투스
+    implementation 'com.akexorcist:bluetoothspp:1.0.0'
+
 }

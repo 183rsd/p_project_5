@@ -124,7 +124,7 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
                         startActivity(intent);
 
                     }
-                }, 5000);
+                }, 2500);
 
 
             }

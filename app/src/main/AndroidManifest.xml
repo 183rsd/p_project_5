@@ -11,7 +11,10 @@
     <uses-permission android:name="android.permission.CAMERA" /> <!-- 전화와 메시지를 보내기 위한 퍼미션 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DIAL_PHONE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 블루투스 퍼미션 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <uses-feature
         android:name="android.hardware.camera2"
@@ -27,7 +30,11 @@
         android:theme="@style/Theme.P_project_5"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".Voice_Analysis_Activity"></activity>
+        <activity android:name=".Typing_Test_Activity"></activity>
+        <activity android:name=".Sensor_Alcohol" />
+        <activity android:name=".Audio_Analysis_Result_Activity" />
+        <activity android:name=".Audio_Analysis_Activity" />
+        <activity android:name=".TestActivity" />
         <activity
             android:name=".App_Loading_Activity"
             android:exported="true">

@@ -4,59 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_bg"
     tools:context=".Alcohol_Detected_Activity">
+
 
     <LinearLayout
         android:id="@+id/layout_user_in_alcohol_detect"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints">
-
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/border_layout"
+        android:backgroundTint="#fff"
+        android:orientation="vertical">
         <TextView
-            android:id="@+id/tv_user_name"
+            android:id="@+id/tv_alcohol_detect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="상태 - 운행 제한"
-            android:layout_below="@id/iv_user_profile"
+            android:textSize="20sp"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:textColor="#E80101"
-            android:textSize="30sp"
-            android:layout_centerHorizontal="true" />
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="- 음주 감지 -\n운행이 제한되었습니다.\n본인 확인 후 테스트를 진행해주세요. "/>
+
+
+        <ImageView
+            android:id="@+id/iv_camera"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/no_profile"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_image_analysis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_btn2"
+            android:layout_marginTop="30dp"
+            android:enabled="false"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="다음"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp" />
+
+
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_alcohol_detect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_below="@+id/layout_user_in_alcohol_detect"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:gravity="center_horizontal"
-        android:text="- 음주 감지 -\n운행이 제한되었습니다.\n본인 확인 후 테스트를 진행해주세요. "/>
-
-
-    <ImageView
-        android:id="@+id/iv_camera"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/tv_alcohol_detect"
-        android:layout_centerInParent="true"
-        android:src="@drawable/choice_photo"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp" />
-    <Button
-        android:id="@+id/btn_image_analysis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_camera"
-        android:layout_centerInParent="true"
-        android:enabled="false"
-        android:text="확인"/>
 
 </RelativeLayout>

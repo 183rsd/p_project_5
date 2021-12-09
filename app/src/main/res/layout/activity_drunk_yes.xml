@@ -5,13 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".Drunk_Yes_Activity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="음주 상태로 확인되었습니다.\n\n\n\n음주 운전 사고 사진으로 경각심"
-        android:textSize="30dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

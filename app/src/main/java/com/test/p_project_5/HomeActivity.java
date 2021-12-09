@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth ;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference mDatabase;
-    private Button btn_update_photo; // 이미지 변경 버튼
+    private Button btn_update_photo, btn_update_call; // 이미지, 연락처 변경 버튼
 
     private String uid, nickname, photoUrl;
 
@@ -137,7 +137,7 @@ public class HomeActivity extends AppCompatActivity {
 
         tv_call1 = findViewById(R.id.tv_call1);
         tv_call2 = findViewById(R.id.tv_call2);
-        iv_btn_update_call = findViewById(R.id.iv_btn_update_call);
+        btn_update_call = findViewById(R.id.btn_update_call);
 
         btn_update_photo = findViewById(R.id.btn_update_photo);
         iv_user_img = findViewById(R.id.iv_user_img);
@@ -147,7 +147,7 @@ public class HomeActivity extends AppCompatActivity {
         // 연락처 수정 다이얼로그
         call_update_dialog = new Dialog(this);
         call_update_dialog.setContentView(R.layout.call_update_dialog);
-        iv_btn_update_call.setOnClickListener(new View.OnClickListener() {
+        btn_update_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 call_update();
