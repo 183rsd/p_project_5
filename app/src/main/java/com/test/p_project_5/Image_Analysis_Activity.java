@@ -3,6 +3,7 @@ package com.test.p_project_5;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -35,14 +37,13 @@ public class Image_Analysis_Activity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference mDatabase;
 
-    private String uid;
+    private Button go_expression_analysis, go_expression_analysis2;
+    private String uid, now_user;
     private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 화면을 landscape(가로) 화면으로 고정
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_image_analysis);
 
         iv_analysis_default = findViewById(R.id.iv_analysis_default);
@@ -63,6 +64,29 @@ public class Image_Analysis_Activity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference(); // 파이어베이스 realtim database에서 정보 가져오기
 
         getFireBaseProfileImage(uid);
+
+        go_expression_analysis = findViewById(R.id.go_expression_analysis);
+        go_expression_analysis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                now_user = "차주";
+                Intent intent = new Intent(Image_Analysis_Activity.this, Expression_Analysis_Activity.class);
+                intent.putExtra("uid", uid); // 사용자 고유 uid
+                intent.putExtra("현재사용자",now_user);
+                startActivity(intent);
+            }
+        });
+        go_expression_analysis2 = findViewById(R.id.go_expression_analysis2);
+        go_expression_analysis2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                now_user = "다른사람";
+                Intent intent = new Intent(Image_Analysis_Activity.this, Expression_Analysis_Activity.class);
+                intent.putExtra("uid", uid); // 사용자 고유 uid
+                intent.putExtra("현재사용자",now_user);
+                startActivity(intent);
+            }
+        });
 
     }
 

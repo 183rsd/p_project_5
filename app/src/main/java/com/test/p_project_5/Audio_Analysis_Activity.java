@@ -32,6 +32,10 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.security.ProviderInstaller;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.conscrypt.Conscrypt;
 import org.json.JSONException;
@@ -72,9 +76,14 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
     SpeechRecognizer mRecognizer;
     //음성 출력용
     TextToSpeech tts;
-
-    String sen1, sen2;
+    private String uid;
+    String sen1, sen2, reason;
     Float simil = null;
+
+    // 파이어베이스
+    private FirebaseAuth mAuth ;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference mDatabase;
 
     // 화면 처리용
     int randomNum;
@@ -94,15 +103,24 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         cThis=this;
         super.onCreate(savedInstanceState);
-        // 화면을 landscape(가로) 화면으로 고정
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_audio_analysis);
+
+        Intent intent = getIntent();
+        uid = intent.getStringExtra("uid");
+
 
         tv_audio_analysis = findViewById(R.id.tv_audio_analysis);
         randomText();
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.getReference();
 
-        sen2 = tv_audio_analysis.getText().toString();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // 로그인한 유저의 정보 가져오기
+        mAuth = FirebaseAuth.getInstance(); // 유저 계정 정보 가져오기
+        mDatabase = FirebaseDatabase.getInstance().getReference(); // 파이어베이스 realtim database에서 정보 가져오기
+
+
+
 
 
 
@@ -112,6 +130,7 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sen1 = txtInMsg.getText().toString();
+                sen2 = tv_audio_analysis.getText().toString();
                 String s1, s2;
                 s1 = "안녕하세요 전민종입니다";
                 s2 = "안녕하 저미농입니다";
@@ -125,10 +144,14 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
                 }
                 if(simil>=80.0){
                     Intent intent = new Intent(Audio_Analysis_Activity.this, Drunk_No_Activity.class);
+                    intent.putExtra("uid", uid); // 사용자 고유 uid
                     startActivity(intent);
                 }
                 else if(simil<79.9){
+                    reason = "음성 분석";
                     Intent intent = new Intent(Audio_Analysis_Activity.this, Drunk_Yes_Activity.class);
+                    intent.putExtra("uid", uid); // 사용자 고유 uid
+                    intent.putExtra("이유", reason);
                     startActivity(intent);
                 }
             }

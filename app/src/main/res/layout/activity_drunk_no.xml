@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Drunk_No_Activity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="운행 제한 해제"
+        android:text="테스트 결과 음주 상태가 아닌 것으로 판별되었습니다."
         android:layout_gravity="center"
-        android:textSize="50sp"
+        android:textSize="30sp"
         tools:ignore="MissingConstraints" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="운행 제한 해제! \n확인 버튼을 누르면 앱이 종료됩니다."
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:id="@+id/btn_app_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="확인"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

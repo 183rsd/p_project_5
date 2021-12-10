@@ -30,12 +30,11 @@ public class Typing_Test_Activity extends AppCompatActivity {
     private long backKeyPressedTime = 0;
     //다음 액티비티로 넘어가기 위해 먼저 자기 자신을 선언
     public static Activity typing_Test_Activity;
+    String uid, now_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 화면을 landscape(가로) 화면으로 고정
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_typing_test);
         //다음 액티비티로 넘어가기 위해 먼저 자기 자신을 객체에 담음
         //넘어갈 액티비티에는
@@ -52,6 +51,10 @@ public class Typing_Test_Activity extends AppCompatActivity {
         warning=(TextView) findViewById(R.id.warning);
         edit1=(EditText) findViewById(R.id.edit1);
         random_text = (TextView)findViewById(R.id.random_text);
+
+        Intent intent = getIntent();
+        uid = intent.getStringExtra("uid");
+        now_user = intent.getStringExtra("현재사용자");
         //랜덤문자열 생성
         Random rnd = new Random();
 
@@ -97,9 +100,19 @@ public class Typing_Test_Activity extends AppCompatActivity {
                 life.setVisibility(View.VISIBLE);
                 count.setVisibility(View.VISIBLE);
                 if(random_text.getText().toString().equals(edit1.getText().toString())){
-                    //성공 결과로 넘어가는 액티비티 구현해야함
-                    Intent intent1=new Intent(getApplicationContext(), Alcohol_Detected_Activity.class);
-                    startActivity(intent1);
+                    if(now_user.equals("차주")){
+                        Intent intent=new Intent(getApplicationContext(), Stried_Analysis_Activity.class);
+                        intent.putExtra("uid", uid); // 사용자 고유 uid
+                        intent.putExtra("현재사용자",now_user);
+                        startActivity(intent);
+                    }
+                    else if (now_user.equals("다른사람")){
+                        Intent intent=new Intent(getApplicationContext(), Audio_Analysis_Activity.class);
+                        intent.putExtra("uid", uid); // 사용자 고유 uid
+                        intent.putExtra("현재사용자",now_user);
+                        startActivity(intent);
+                    }
+
                 } else{
                     x++;
                     y--;

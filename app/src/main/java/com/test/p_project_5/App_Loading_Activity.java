@@ -16,8 +16,7 @@ public class App_Loading_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 화면을 landscape(가로) 화면으로 고정
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         setContentView(R.layout.activity_app_loading);
 
         iv_logo_gif = (ImageView) findViewById(R.id.iv_logo_gif);

@@ -23,10 +23,10 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 public class Drunk_Yes_Activity extends AppCompatActivity{
-    private TextView drunk_tv_call1, drunk_tv_call2;
+    private TextView drunk_tv_call1, drunk_tv_call2, drunk_tv_reason;
     private Button drunk_btn_call1_dialog,drunk_btn_call2_dialog;
 
-    String uid, call1, call2, tel;
+    String uid, call1, call2, tel, reason;
 
     // 파이어베이스
     private FirebaseAuth mAuth ;
@@ -37,12 +37,11 @@ public class Drunk_Yes_Activity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 화면을 landscape(가로) 화면으로 고정
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_drunk_yes);
 
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
+        reason = intent.getStringExtra("이유");
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.getReference();
@@ -55,6 +54,9 @@ public class Drunk_Yes_Activity extends AppCompatActivity{
 
         drunk_tv_call1 = (TextView) findViewById(R.id.drunk_tv_call1);
         drunk_tv_call2 =(TextView) findViewById(R.id.drunk_tv_call2);
+        drunk_tv_reason = (TextView) findViewById(R.id.drunk_tv_reason);
+        drunk_tv_reason.setText("사유 : "+reason);
+
 
         drunk_btn_call1_dialog = findViewById(R.id.drunk_btn_call1_dialog);
         drunk_btn_call2_dialog = findViewById(R.id.drunk_btn_call2_dialog);

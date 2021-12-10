@@ -54,7 +54,7 @@
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:ems="10"
-            android:hint="이 부분은 테스트용(실제로는x)"
+            android:hint="(실제로는 음성이 들어감)"
             android:inputType="textPersonName"/>
 
         <Button

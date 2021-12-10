@@ -29,13 +29,28 @@
         android:theme="@style/Theme.P_project_5"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".Typing_Test_Activity"></activity>
-        <activity android:name=".Sensor_Alcohol" />
-        <activity android:name=".Audio_Analysis_Result_Activity" />
-        <activity android:name=".Audio_Analysis_Activity" />
-        <activity android:name=".TestActivity" />
+        <activity android:name=".Stried_Analysis_Activity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" ></activity>
+        <activity android:name=".Expression_Analysis_Activity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".Typing_Test_Activity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".Sensor_Alcohol"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".Audio_Analysis_Activity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".TestActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".App_Loading_Activity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true">
             <intent-filter> <!-- 앱 실행 시 가장 먼저 호출되는 액티비티 -->
                 <action android:name="android.intent.action.MAIN" />
@@ -45,36 +60,48 @@
         </activity>
         <activity
             android:name=".Analysis_Loading_Activity"
-            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             tools:ignore="Instantiatable" />
         <activity
             android:name=".Image_Analysis_Activity"
-            android:configChanges="orientation|screenSize" />
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"  />
         <activity
             android:name=".Repeat_Fail_Activity"
-            android:configChanges="orientation|screenSize" />
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".Drunk_No_Activity"
-            android:configChanges="orientation|screenSize" />
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"  />
         <activity
             android:name=".Drunk_Yes_Activity"
-            android:configChanges="orientation|screenSize" />
-        <activity android:name=".Alcohol_Detected_Activity" />
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".Alcohol_Detected_Activity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".HelpActivity"
-            android:configChanges="orientation|screenSize" />
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"  />
         <activity
             android:name=".VersionInfoActivity"
-            android:configChanges="orientation|screenSize" />
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".MenuActivity"
-            android:configChanges="orientation|screenSize" />
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".HomeActivity"
-            android:configChanges="orientation|screenSize" />
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize" />
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

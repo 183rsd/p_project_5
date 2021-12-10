@@ -15,8 +15,6 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 화면을 landscape(가로) 화면으로 고정
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_test);
 
         Intent intent = getIntent();
@@ -70,6 +68,7 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TestActivity.this, Audio_Analysis_Activity.class);
+                intent.putExtra("uid", uid); // 사용자 고유 uid
                 startActivity(intent);
             }
         });

@@ -24,6 +24,7 @@ public class MenuActivity extends AppCompatActivity {
     private String uid;
     private ImageView iv_user_profile;
     private TextView tv_user_name;
+    private ImageView iv_alcohol_detect_testVersion;
 
     private FirebaseAuth mAuth ;
     private FirebaseDatabase firebaseDatabase;
@@ -33,25 +34,19 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // 화면을 landscape(가로) 화면으로 고정
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-
-
         setContentView(R.layout.activity_menu);
 
         Intent intent = getIntent();
         String nickname = intent.getStringExtra("nickname");
         String photoUrl = intent.getStringExtra("photoUrl");
 
-        iv_user_profile = findViewById(R.id.iv_user_profile);
-        tv_user_name = findViewById(R.id.tv_user_name);
-        tv_user_name.setText(nickname);
+//        iv_user_profile = findViewById(R.id.iv_user_profile);
+//        tv_user_name = findViewById(R.id.tv_user_name);
+//        tv_user_name.setText(nickname);
 
-        if(photoUrl != null){
-            Glide.with(this).load(photoUrl).into(iv_user_profile);
-        }
+//        if(photoUrl != null){
+//            Glide.with(this).load(photoUrl).into(iv_user_profile);
+//        }
 
 
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -61,6 +56,16 @@ public class MenuActivity extends AppCompatActivity {
         uid = user != null ? user.getUid() : null; // 로그인한 유저의 고유 uid 가져오기
         mAuth = FirebaseAuth.getInstance(); // 유저 계정 정보 가져오기
         mDatabase = FirebaseDatabase.getInstance().getReference(); // 파이어베이스 realtim database에서 정보 가져오기
+
+        iv_alcohol_detect_testVersion = findViewById(R.id.iv_alcohol_detect_testVersion);
+        iv_alcohol_detect_testVersion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, Alcohol_Detected_Activity.class);
+                intent.putExtra("uid", uid); // 사용자 고유 uid
+                startActivity(intent);
+            }
+        });
 
 
         // 프로빌 수정 버튼 클릭
@@ -82,6 +87,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, VersionInfoActivity.class);
+                intent.putExtra("uid", uid); // 사용자 고유 uid
                 startActivity(intent);
             }
         });
@@ -96,16 +102,16 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        // 도움말 버튼 클릭
-        btn_test = findViewById(R.id.btn_test);
-        btn_test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MenuActivity.this, TestActivity.class);
-                intent.putExtra("uid", uid); // 사용자 고유 uid
-                startActivity(intent);
-            }
-        });
+        // 테스트 버튼 클릭
+//        btn_test = findViewById(R.id.btn_test);
+//        btn_test.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MenuActivity.this, Alcohol_Detected_Activity.class);
+//                intent.putExtra("uid", uid); // 사용자 고유 uid
+//                startActivity(intent);
+//            }
+//        });
 
     }
 

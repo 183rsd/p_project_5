@@ -11,7 +11,23 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:textSize="30sp"
+        android:layout_gravity="center_horizontal"
+        android:text="음주 상태로 확인되었습니다."/>
+    <TextView
+        android:id="@+id/drunk_tv_reason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:text="사유"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
         android:text="연락처1"/>
     <TextView
         android:id="@+id/drunk_tv_call1"
@@ -27,6 +43,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:text="연락처2"/>
     <TextView
         android:id="@+id/drunk_tv_call2"
