@@ -25,6 +25,8 @@ public class Typing_Test_Activity extends AppCompatActivity {
     private long timeCountInMilliSeconds = 1 * 60000;
     private CountDownTimer countDownTimer;
     private int x=0, y=5;
+    int randomNum;
+    String[] strData = {"안녕하세요1", "안녕하세요2", "안녕하세요3", "안녕하세요4", "안녕하세요5"};
     private long backKeyPressedTime = 0;
     //다음 액티비티로 넘어가기 위해 먼저 자기 자신을 선언
     public static Activity typing_Test_Activity;
@@ -32,8 +34,8 @@ public class Typing_Test_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        // 화면을 landscape(가로) 화면으로 고정
-//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        // 화면을 landscape(가로) 화면으로 고정
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_typing_test);
         //다음 액티비티로 넘어가기 위해 먼저 자기 자신을 객체에 담음
         //넘어갈 액티비티에는
@@ -53,31 +55,31 @@ public class Typing_Test_Activity extends AppCompatActivity {
         //랜덤문자열 생성
         Random rnd = new Random();
 
-        final String random_name_1 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 1
-        final String random_name_2 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 2
-        final String random_name_3 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 3
-        final String random_name_4 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 4
-        final String random_name_5 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 5
-        final String random_name_6 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 6
-        final String random_name_7 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 7
-        final String random_name_8 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 8
-        final String random_name_9 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 9
-        final String random_name_10 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 10
 
-        //닉네임 생성하기 버튼
+
+        final String random_name_1 = "1번문장"; //한글 랜덤 문자 1
+        final String random_name_2 = "2번문장"; //한글 랜덤 문자 2
+        final String random_name_3 = "3번문장"; //한글 랜덤 문자 3
+        final String random_name_4 = "4번문장"; //한글 랜덤 문자 4
+        final String random_name_5 = "5번문장"; //한글 랜덤 문자 5
+        final String random_name_6 = "6번문장"; //한글 랜덤 문자 6
+        final String random_name_7 = "7번문장"; //한글 랜덤 문자 7
+        final String random_name_8 = "8번문장"; //한글 랜덤 문자 8
+        final String random_name_9 = "9번문장"; //한글 랜덤 문자 9
+        final String random_name_10 = "10번문장"; //한글 랜덤 문자 10
+
         final Button btn_start = (Button) findViewById(R.id.btn_start);
         btn_start.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Toast.makeText(getApplicationContext(),"문장 랜덤 생성", Toast.LENGTH_LONG).show();
+
                 //입력칸, 시간, 문자열 활성화
                 btn_start.setVisibility(View.INVISIBLE);
                 btn1.setVisibility(View.VISIBLE);
                 textViewTime.setVisibility(View.VISIBLE);
                 edit1.setVisibility(View.VISIBLE);
 
-                random_text.setText(String.valueOf(random_name_1+random_name_2+random_name_3+random_name_4+random_name_5
-                        +random_name_6 +random_name_7+random_name_8+random_name_9+random_name_10));
+                randomText();
 
                 //카운트 다운 시간 30초
                 String conversionTime = "000200";
@@ -105,12 +107,20 @@ public class Typing_Test_Activity extends AppCompatActivity {
                     life.setText(y+"");
                 }
                 if (count.getText().toString().equals("5")){
-                    //실패 결과로 넘어가는 액티비티 구현해야함
-                    Intent intent1=new Intent(Typing_Test_Activity.this, MainActivity.class);
+                    Intent intent1=new Intent(Typing_Test_Activity.this, Repeat_Fail_Activity.class);
                     startActivity(intent1);
                 }
             }
         });
+    }
+
+    private void randomText(){
+//        randomNum = (int) (Math.random() * 10);
+        Random random = new Random();
+
+        randomNum = random.nextInt(5);
+        random_text.setText(strData[randomNum]);
+
     }
 
     public void countDown(String time) {
@@ -173,24 +183,10 @@ public class Typing_Test_Activity extends AppCompatActivity {
                 // 변경 후
                 textViewTime.setText("시간초과!!!");
                 //시간초과후 실패결과화면으로 이동하는 코드 넣기!
-                Intent intent1=new Intent(Typing_Test_Activity.this, MainActivity.class);
+                Intent intent1=new Intent(Typing_Test_Activity.this, Repeat_Fail_Activity.class);
                 startActivity(intent1);
             }
         }.start();
-    }
-    public void onBackPressed() {
-        //2000밀리초 = 2초
-        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
-            backKeyPressedTime = System.currentTimeMillis();
-            Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        //2초 이내에 뒤로가기 버튼을 한번 더 클릭시 앱 종료
-        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            finishAffinity();
-            System.runFinalization();
-            System.exit(0);
-        }
     }
 
 }

@@ -84,4 +84,6 @@ dependencies {
     //블루투스
     implementation 'com.akexorcist:bluetoothspp:1.0.0'
 
+    implementation 'org.conscrypt:conscrypt-android:2.5.0'
+
 }

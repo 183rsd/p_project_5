@@ -3,6 +3,7 @@
     ...
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">127.0.0.1</domain>
+        <domain includeSubdomains="true">svc.saltlux.ai:31781</domain>
     </domain-config>
     ...
 </network-security-config>

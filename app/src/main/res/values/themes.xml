@@ -15,11 +15,7 @@
         <!-- 타이틀바 삭제 -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.P_project_5.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="Theme.P_project_5.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

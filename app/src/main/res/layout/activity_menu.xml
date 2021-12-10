@@ -12,21 +12,26 @@
         android:id="@+id/layout_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
         android:layout_margin="10dp"
         android:orientation="horizontal">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/app_logo"
+            android:layout_gravity="center"/>
 
         <ImageView
             android:id="@+id/iv_user_profile"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_gravity="right"
             android:src="@drawable/no_profile" />
         <TextView
             android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="닉네임"
-            android:layout_gravity="center"
+            android:layout_gravity="right"
             android:layout_marginLeft="20dp"
             android:textColor="#fff"
             android:textSize="10sp" />

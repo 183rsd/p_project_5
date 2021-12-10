@@ -6,13 +6,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -25,10 +28,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.security.ProviderInstaller;
+
+import org.conscrypt.Conscrypt;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.w3c.dom.Document;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -36,11 +46,22 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
-
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import javax.security.cert.CertificateException;
+import javax.security.cert.X509Certificate;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 
 public class Audio_Analysis_Activity extends AppCompatActivity {
@@ -53,6 +74,7 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
     TextToSpeech tts;
 
     String sen1, sen2;
+    Float simil = null;
 
     // 화면 처리용
     int randomNum;
@@ -62,12 +84,13 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
     EditText txtInMsg;
     EditText txtSystem;
     TextView tv_audio_analysis;
-    String[] strData = {"안녕하세요", "안녕하세요", "안녕하세요", "안녕하세요", "안녕하세요"};
+    String[] strData = {"안", "안녕", "안녕하", "안녕하세", "안녕하세요"};
 
     // 로딩
     Analysis_Loading_Activity customProgressDialog;
 
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void onCreate(Bundle savedInstanceState) {
         cThis=this;
         super.onCreate(savedInstanceState);
@@ -88,23 +111,26 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
         btn_audio_analysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                customProgressDialog.show();
-//                Handler mHandler = new Handler();
-//                mHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Intent intent = new Intent(Audio_Analysis_Activity.this, Audio_Analysis_Result_Activity.class);
-//                        startActivity(intent);
-//
-//                    }
-//                }, 2500);
                 sen1 = txtInMsg.getText().toString();
-//                String s1, s2;
-//                s1 = "안녕";
-//                s2 = "앙녕";
-                float num = apiServiceTest(sen1, sen2);
-                Toast.makeText(getApplicationContext(), ""+num, Toast.LENGTH_SHORT).show();
-
+                String s1, s2;
+                s1 = "안녕하세요 전민종입니다";
+                s2 = "안녕하 저미농입니다";
+                JSONTask jsontask = new JSONTask();
+                try {
+                    simil = jsontask.execute(sen1, sen2).get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(simil>=80.0){
+                    Intent intent = new Intent(Audio_Analysis_Activity.this, Drunk_No_Activity.class);
+                    startActivity(intent);
+                }
+                else if(simil<79.9){
+                    Intent intent = new Intent(Audio_Analysis_Activity.this, Drunk_Yes_Activity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -149,6 +175,7 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
         txtSystem=(EditText)findViewById(R.id.txtSystem);
 
     }
+
 
     private RecognitionListener listener=new RecognitionListener() {
         @Override
@@ -264,61 +291,99 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
 
     }
 
-    public static float apiServiceTest(String sen1,String sen2) {
+//    public static float apiServiceTest(String sen1,String sen2) {
+//        System.setProperty("https.protocols","TLSv1.2");
+//        URL url = null;
+//        URLConnection connection = null;
+//        StringBuilder responseBody = new StringBuilder();
+//        JSONParser jsonparse=new JSONParser();
+//
+//        float num = 10;
+//        try {
+//            // URL 지정
+//            url = new URL("http://svc.saltlux.ai:31781");
+//
+////            TrustManager[] trustAllCerts = new TrustManager[]{
+////                    new X509TrustManager() {
+////
+////                        public java.security.cert.X509Certificate[] getAcceptedIssuers()
+////                        {
+////                            return null;
+////                        }
+////                        public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType)
+////                        {
+////                            //No need to implement.
+////                        }
+////                        public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType)
+////                        {
+////                            //No need to implement.
+////                        }
+////                    }
+////            };
+////
+////// Install the all-trusting trust manager
+////            try
+////            {
+////                SSLContext sc = SSLContext.getInstance("SSL");
+////                sc.init(null, trustAllCerts, new java.security.SecureRandom());
+////                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+////            }
+////            catch (Exception e)
+////            {
+////                System.out.println(e);
+////            }
+//
+//            connection = url.openConnection();
+//            // Header 정보 지정
+//            connection.addRequestProperty("Content-Type", "application/json");
+//            connection.setDoOutput(true);
+//            connection.setDoInput(true);
+//
+//            System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+//
+//            JSONObject jsonBody = new JSONObject();
+//            // 사용자 키
+//            jsonBody.put("key", "9fd1c735-3dc2-4c4d-9410-2b05202705b4");
+//            // 서비스 ID
+//            jsonBody.put("serviceId", "01984312263");
+//
+//            // 서비스에서 필요로 하는 parameter
+//            JSONObject argument = new JSONObject();
+//            argument.put("modelType","muse");
+//            argument.put("sentence1","안녕");
+//            argument.put("sentence2","안녕하세여");
+//            jsonBody.put("argument", argument);
+//
+//            BufferedOutputStream bos = new BufferedOutputStream(connection.getOutputStream());
+//
+//            bos.write(jsonBody.toJSONString().getBytes(StandardCharsets.UTF_8));
+//            bos.flush();
+//            bos.close();
+//
+//            BufferedReader br = new BufferedReader(
+//                    new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+//            String line = null;
+//            while ((line = br.readLine()) != null) {
+//                responseBody.append(line);
+//            }
+//            br.close();
+//
+//        } catch (Throwable e) {
+////            System.out.println(e.toString());
+//            Log.d("에러ㄴㄻㅇ : ",e.toString());
+//        }
+//
+//
+//        String result=responseBody.toString();
+//        try {
+//            JSONObject jsonarray=(JSONObject)jsonparse.parse(result);
+//            JSONObject simil=(JSONObject)jsonarray.get("return_object");
+//            String i=simil.get("similarity").toString();
+//            num=Float.parseFloat(i)*100;
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return num;
+//    }
 
-        URL url = null;
-        URLConnection connection = null;
-        StringBuilder responseBody = new StringBuilder();
-        JSONParser jsonparse=new JSONParser();
-        float num = 0;
-        try {
-            // URL 지정
-            url = new URL("http://svc.saltlux.ai:31781");
-            connection = url.openConnection();
-            // Header 정보 지정
-            connection.addRequestProperty("Content-Type", "application/json");
-            connection.setDoOutput(true);
-            connection.setDoInput(true);
-
-            JSONObject jsonBody = new JSONObject();
-            // 사용자 키
-            jsonBody.put("key", "394ff0eb-4b02-45bd-9bdb-9469c625a784");
-            // 서비스 ID
-            jsonBody.put("serviceId", "01984312263");
-
-            // 서비스에서 필요로 하는 parameter
-            JSONObject argument = new JSONObject();
-            argument.put("modelType","muse");
-            argument.put("sentence1",sen1);
-            argument.put("sentence2",sen2);
-            jsonBody.put("argument", argument);
-
-            BufferedOutputStream bos = new BufferedOutputStream(connection.getOutputStream());
-
-            bos.write(jsonBody.toJSONString().getBytes(StandardCharsets.UTF_8));
-            bos.flush();
-            bos.close();
-
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                responseBody.append(line);
-            }
-            br.close();
-
-        } catch (Throwable e) {
-            System.out.println(e.toString());
-        }
-        String result=responseBody.toString();
-        try {
-            JSONObject jsonarray=(JSONObject)jsonparse.parse(result);
-            JSONObject simil=(JSONObject)jsonarray.get("return_object");
-            String i=simil.get("similarity").toString();
-            num=Float.parseFloat(i)*100;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return num;
-    }
 }
