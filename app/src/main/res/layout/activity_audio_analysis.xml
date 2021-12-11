@@ -1,27 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/app_bg"
+    android:paddingTop="7dp"
     tools:context=".Audio_Analysis_Activity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/harmonyfont"
+        android:text="음성 검사"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="254dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="0dp"
+        android:scaleX="2.5"
+        android:scaleY="2.5"
+        app:srcCompat="@drawable/tl_yellow" />
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="490dp"
+        android:layout_height="240dp"
+        android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:orientation="vertical"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/border_layout"
         android:backgroundTint="#fff"
-        android:layout_margin="30dp">
+        android:orientation="vertical">
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:textSize="15sp"
-            android:text="아래 문장을 녹음한 후 전송하세요"/>
+            android:fontFamily="@font/harmonyfont"
+            android:text="아래 문장을 녹음한 후 전송하세요"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
         <TextView
             android:id="@+id/tv_audio_analysis"
             android:layout_width="wrap_content"
@@ -30,43 +62,42 @@
             android:layout_marginTop="10dp"
             android:text="무작위 문장이 들어갈 자리"
             android:textColor="@color/black"
-            android:textSize="30sp"/>
+            android:textSize="20sp" />
+
         <ImageButton
             android:id="@+id/btn_stt_start"
-            android:layout_marginTop="10dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:src="@drawable/record"/>
+            android:src="@drawable/record" />
+
         <EditText
             android:id="@+id/txtSystem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"/>
+            android:ems="10"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/txtInMsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:ems="10"
-            android:hint="(실제로는 음성이 들어감)"
-            android:inputType="textPersonName"/>
+            android:hint="이 부분은 테스트용(실제로는x)"
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/btn_audio_analysis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-
-            android:text="다음"/>
+            android:background="@drawable/custom_btn3"
+            android:text="다음"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,59 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-
+    android:background="@drawable/app_bg"
+    android:paddingTop="7dp"
     tools:context=".Drunk_Yes_Activity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_gravity="center_horizontal"
-        android:text="음주 상태로 확인되었습니다."/>
-    <TextView
-        android:id="@+id/drunk_tv_reason"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_gravity="center_horizontal"
-        android:text="사유"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:textColor="@color/black"
-        android:text="연락처1"/>
-    <TextView
-        android:id="@+id/drunk_tv_call1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="연락처1"/>
-    <Button
-        android:id="@+id/drunk_btn_call1_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="전화걸기"/>
+        android:fontFamily="@font/harmonyfont"
+        android:text="운행 제한"
+        android:textColor="#FB0000"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="연락처2"/>
-    <TextView
-        android:id="@+id/drunk_tv_call2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="연락처2"/>
-    <Button
-        android:id="@+id/drunk_btn_call2_dialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="전화걸기"/>
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="254dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="0dp"
+        android:scaleX="2.5"
+        android:scaleY="2.5"
+        app:srcCompat="@drawable/tl_red" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="490dp"
+        android:layout_height="240dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/border_layout"
+        android:backgroundTint="#fff"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/drunk_tv_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/harmonyfont"
+            android:gravity="center_horizontal"
+            android:text="사유"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/harmonyfont"
+            android:gravity="center_horizontal"
+            android:text="최종 검사 결과 음주 상태로 판단되었습니다. \n현재 차량 운행이 제한된 상태이므로 \n 비상 연락망을 이용하시거나 다시 테스트를 진행하여 주십시오."
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="470dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border_layout"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                android:text="연락처1"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/drunk_tv_call1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="01012341234"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/drunk_btn_call1_dialog"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="0.2"
+                android:background="@drawable/custom_btn3"
+                android:fontFamily="@font/harmonyfont"
+                android:text="전화걸기"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="470dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/border_layout"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                android:text="연락처2"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/drunk_tv_call2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="01045674567"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/drunk_btn_call2_dialog"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="0.2"
+                android:background="@drawable/custom_btn3"
+                android:fontFamily="@font/harmonyfont"
+                android:text="전화걸기" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_restart"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_btn3"
+            android:fontFamily="@font/harmonyfont"
+            android:text="테스트 다시시작"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</RelativeLayout>

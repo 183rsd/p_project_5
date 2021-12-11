@@ -1,6 +1,7 @@
 package com.test.p_project_5;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -18,8 +19,10 @@ public class Drunk_No_Activity extends AppCompatActivity {
         btn_app_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                ActivityCompat.finishAffinity(Drunk_No_Activity.this);
+                System.exit(0);
             }
         });
+
     }
 }

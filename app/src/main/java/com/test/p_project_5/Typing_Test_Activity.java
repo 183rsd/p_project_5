@@ -26,7 +26,7 @@ public class Typing_Test_Activity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private int x=0, y=5;
     int randomNum;
-    String[] strData = {"안녕하세요1", "안녕하세요2", "안녕하세요3", "안녕하세요4", "안녕하세요5"};
+    String[] strData = {"ozkamnmiwquyabc", "fghjweogxvb", "uyffdgqfdzz", "xugyjmcoqie", "bjasjpczxlls"};
     private long backKeyPressedTime = 0;
     //다음 액티비티로 넘어가기 위해 먼저 자기 자신을 선언
     public static Activity typing_Test_Activity;
@@ -60,16 +60,16 @@ public class Typing_Test_Activity extends AppCompatActivity {
 
 
 
-        final String random_name_1 = "1번문장"; //한글 랜덤 문자 1
-        final String random_name_2 = "2번문장"; //한글 랜덤 문자 2
-        final String random_name_3 = "3번문장"; //한글 랜덤 문자 3
-        final String random_name_4 = "4번문장"; //한글 랜덤 문자 4
-        final String random_name_5 = "5번문장"; //한글 랜덤 문자 5
-        final String random_name_6 = "6번문장"; //한글 랜덤 문자 6
-        final String random_name_7 = "7번문장"; //한글 랜덤 문자 7
-        final String random_name_8 = "8번문장"; //한글 랜덤 문자 8
-        final String random_name_9 = "9번문장"; //한글 랜덤 문자 9
-        final String random_name_10 = "10번문장"; //한글 랜덤 문자 10
+        final String random_name_1 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 1
+        final String random_name_2 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 2
+        final String random_name_3 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 3
+        final String random_name_4 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 4
+        final String random_name_5 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 5
+        final String random_name_6 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 6
+        final String random_name_7 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 7
+        final String random_name_8 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 8
+        final String random_name_9 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 9
+        final String random_name_10 = String.valueOf((char) ((int) (rnd.nextInt(11171))+44032)); //한글 랜덤 문자 10
 
         final Button btn_start = (Button) findViewById(R.id.btn_start);
         btn_start.setOnClickListener(new View.OnClickListener(){
@@ -81,6 +81,9 @@ public class Typing_Test_Activity extends AppCompatActivity {
                 btn1.setVisibility(View.VISIBLE);
                 textViewTime.setVisibility(View.VISIBLE);
                 edit1.setVisibility(View.VISIBLE);
+
+//                random_text.setText(String.valueOf(random_name_1+random_name_2+random_name_3+random_name_4+random_name_5
+//                        +random_name_6 +random_name_7+random_name_8+random_name_9+random_name_10));
 
                 randomText();
 
@@ -95,18 +98,16 @@ public class Typing_Test_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 //입력칸, 시간, 문자열 활성화
-                warning.setVisibility(View.VISIBLE);
-                notwarning.setVisibility(View.VISIBLE);
-                life.setVisibility(View.VISIBLE);
-                count.setVisibility(View.VISIBLE);
                 if(random_text.getText().toString().equals(edit1.getText().toString())){
                     if(now_user.equals("차주")){
+                        Toast.makeText(getApplicationContext(),"테스트 통과. 다음 테스트 진행",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(getApplicationContext(), Stried_Analysis_Activity.class);
                         intent.putExtra("uid", uid); // 사용자 고유 uid
                         intent.putExtra("현재사용자",now_user);
                         startActivity(intent);
                     }
                     else if (now_user.equals("다른사람")){
+                        Toast.makeText(getApplicationContext(),"테스트 통과. 다음 테스트 진행",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(getApplicationContext(), Audio_Analysis_Activity.class);
                         intent.putExtra("uid", uid); // 사용자 고유 uid
                         intent.putExtra("현재사용자",now_user);
@@ -114,6 +115,10 @@ public class Typing_Test_Activity extends AppCompatActivity {
                     }
 
                 } else{
+                    warning.setVisibility(View.VISIBLE);
+                    notwarning.setVisibility(View.VISIBLE);
+                    life.setVisibility(View.VISIBLE);
+                    count.setVisibility(View.VISIBLE);
                     x++;
                     y--;
                     count.setText(x+"");

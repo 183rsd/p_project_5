@@ -19,9 +19,6 @@ public class App_Loading_Activity extends AppCompatActivity {
 
         setContentView(R.layout.activity_app_loading);
 
-        iv_logo_gif = (ImageView) findViewById(R.id.iv_logo_gif);
-        Glide.with(this).load(R.raw.logo_gif).into(iv_logo_gif);
-
         startLoading();
     }
 

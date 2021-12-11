@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Drunk_Yes_Activity extends AppCompatActivity{
     private TextView drunk_tv_call1, drunk_tv_call2, drunk_tv_reason;
-    private Button drunk_btn_call1_dialog,drunk_btn_call2_dialog;
+    private Button drunk_btn_call1_dialog,drunk_btn_call2_dialog, btn_restart;
 
     String uid, call1, call2, tel, reason;
 
@@ -74,6 +74,15 @@ public class Drunk_Yes_Activity extends AppCompatActivity{
             public void onClick(View view) {
                 tel = "tel:" + call2;
                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
+                startActivity(intent);
+            }
+        });
+
+        btn_restart = findViewById(R.id.btn_restart);
+        btn_restart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Drunk_Yes_Activity.this, Alcohol_Detected_Activity.class);
                 startActivity(intent);
             }
         });

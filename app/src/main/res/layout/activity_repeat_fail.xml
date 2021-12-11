@@ -4,38 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_bg"
+    android:paddingTop="7dp"
     tools:context=".Repeat_Fail_Activity">
-    <LinearLayout
-        android:id="@+id/timeCountLayout"
-        android:layout_width="match_parent"
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/harmonyfont"
+        android:text="검사 제한"
+        android:textColor="#FB0000"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="254dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="0dp"
+        android:scaleX="2.5"
+        android:scaleY="2.5"
+        app:srcCompat="@drawable/tl_red" />
+
+    <LinearLayout
+        android:layout_width="490dp"
+        android:layout_height="240dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/border_layout"
+        android:backgroundTint="#fff"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/timeCountLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_countdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/harmonyfont"
+                android:text="05:00"
+                android:textColor="#EC0909"
+                android:textSize="50sp" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_countdown"
+            android:id="@+id/tv_repeat_fail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="50sp"
-            android:textColor="#EC0909"
-            android:text="05:00"/>
+            android:layout_below="@+id/timeCountLayout"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/harmonyfont"
+            android:text="검사 반복 실패로 인해\n 5분간 검사를 진행할 수 없습니다."
+            android:textAlignment="center"
+            android:textSize="30sp" />
 
+        <Button
+            android:id="@+id/btn_test_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_repeat_fail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:enabled="false"
+            android:fontFamily="@font/harmonyfont"
+            android:text="테스트 재진행" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/tv_repeat_fail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/timeCountLayout"
-        android:textSize="30sp"
-        android:layout_marginTop="50dp"
-        android:text="테스트 반복 실패로 인해 5분간 테스트를 재진행할 수 없습니다."/>
-    <Button
-        android:id="@+id/btn_test_repeat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_repeat_fail"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:enabled="false"
-        android:text="테스트 재진행"/>
 </RelativeLayout>

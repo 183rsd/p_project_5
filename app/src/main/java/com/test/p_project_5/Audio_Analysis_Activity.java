@@ -87,7 +87,7 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
 
     // 화면 처리용
     int randomNum;
-    String now_sentence;
+    String now_sentence, now_voice;
     Button btn_audio_analysis;
     ImageButton btnSttStart;
     EditText txtInMsg;
@@ -157,6 +157,9 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
             }
         });
 
+        txtInMsg=(EditText)findViewById(R.id.txtInMsg);
+        txtSystem=(EditText)findViewById(R.id.txtSystem);
+
         //음성인식
         SttIntent=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         SttIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,getApplicationContext().getPackageName());
@@ -194,8 +197,7 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
                 }
             }
         });
-        txtInMsg=(EditText)findViewById(R.id.txtInMsg);
-        txtSystem=(EditText)findViewById(R.id.txtSystem);
+
 
     }
 

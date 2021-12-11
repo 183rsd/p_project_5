@@ -76,17 +76,17 @@ public class Image_Analysis_Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        go_expression_analysis2 = findViewById(R.id.go_expression_analysis2);
-        go_expression_analysis2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                now_user = "다른사람";
-                Intent intent = new Intent(Image_Analysis_Activity.this, Expression_Analysis_Activity.class);
-                intent.putExtra("uid", uid); // 사용자 고유 uid
-                intent.putExtra("현재사용자",now_user);
-                startActivity(intent);
-            }
-        });
+//        go_expression_analysis2 = findViewById(R.id.go_expression_analysis2);
+//        go_expression_analysis2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                now_user = "다른사람";
+//                Intent intent = new Intent(Image_Analysis_Activity.this, Expression_Analysis_Activity.class);
+//                intent.putExtra("uid", uid); // 사용자 고유 uid
+//                intent.putExtra("현재사용자",now_user);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
