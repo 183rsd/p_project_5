@@ -19,7 +19,7 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="490dp"
         android:layout_height="240dp"
         android:layout_centerInParent="true"
@@ -29,8 +29,14 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/border_layout"
         android:backgroundTint="#fff"
+        android:scrollbars="vertical"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="aa\nbb\ncc\ndd\nee\nff\ngg\nhh\naa"
+            android:textSize="50sp"/>
 
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

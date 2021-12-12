@@ -293,8 +293,8 @@ public class HomeActivity extends AppCompatActivity {
         iv_update_photo = photo_update_dialog.findViewById(R.id.update_photo);
         ImageView user_img = (ImageView) findViewById(R.id.iv_user_img);
         BitmapDrawable bitmapDrawable = (BitmapDrawable) user_img.getDrawable();
-        Bitmap bitmap = bitmapDrawable.getBitmap();
-        iv_update_photo.setImageBitmap(bitmap);
+//        Bitmap bitmap = bitmapDrawable.getBitmap();
+//        iv_update_photo.setImageBitmap(bitmap);
         Button update_yes = photo_update_dialog.findViewById(R.id.photo_update_yes);
         Button update_no = photo_update_dialog.findViewById(R.id.photo_update_no);
 
