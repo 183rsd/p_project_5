@@ -30,8 +30,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.P_project_5"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".GPS_Waiting_Dialog_Activity"></activity>
         <activity
             android:name=".Stried_Analysis_Activity"
             android:configChanges="keyboardHidden|orientation|screenSize"

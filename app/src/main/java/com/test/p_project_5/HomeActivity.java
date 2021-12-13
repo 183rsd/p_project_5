@@ -72,10 +72,12 @@ import com.google.firebase.storage.UploadTask;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import org.apache.commons.codec.binary.Base64;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -86,6 +88,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -96,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference mDatabase;
     private Button btn_update_photo, btn_update_call; // 이미지, 연락처 변경 버튼
-
+    Float simil = null;
     private String uid, nickname, photoUrl;
 
     // 이미지
@@ -301,7 +304,7 @@ public class HomeActivity extends AppCompatActivity {
         iv_update_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                photoDialogRadio();
+                capture();
             }
         });
 
@@ -311,6 +314,10 @@ public class HomeActivity extends AppCompatActivity {
                 update_Photo();
 //                getFireBaseProfileImage(uid);
                 photo_update_dialog.dismiss();
+
+                image_soltlux();
+
+
                 Toast.makeText(getApplicationContext(), "완료", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(HomeActivity.this, MenuActivity.class);
                 intent.putExtra("nickname", nickname); // 닉네임
@@ -422,29 +429,29 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     // 이미지를 어느 방법으로 가져올지 정하는 다이얼로그
-    private void photoDialogRadio(){
-        final CharSequence[] PhotoModels = {"카메라로 촬영", "갤러리에서 선택"};
-        android.app.AlertDialog.Builder alt_bld = new android.app.AlertDialog.Builder(this);
-
-        //alt_bld.setIcon(R.drawable.icon);
-        alt_bld.setTitle("사진 선택");
-        alt_bld.setItems(R.array.select_photo, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                // Toast.makeText(ProfileActivity.this, PhotoModels[item] + "가 선택되었습니다.", Toast.LENGTH_SHORT).show();
-                if (item == 0) { // 카메라
-                    capture();
-                    alt_bld.create().dismiss();
-
-
-                } else if (item == 1) { // 갤러리
-                    gallery();
-                    alt_bld.create().dismiss();
-                }
-            }
-        });
-        AlertDialog alert = alt_bld.create();
-        alert.show();
-    }
+//    private void photoDialogRadio(){
+//        final CharSequence[] PhotoModels = {"카메라로 촬영", "갤러리에서 선택"};
+//        android.app.AlertDialog.Builder alt_bld = new android.app.AlertDialog.Builder(this);
+//
+//        //alt_bld.setIcon(R.drawable.icon);
+//        alt_bld.setTitle("사진 선택");
+//        alt_bld.setItems(R.array.select_photo, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int item) {
+//                // Toast.makeText(ProfileActivity.this, PhotoModels[item] + "가 선택되었습니다.", Toast.LENGTH_SHORT).show();
+//                if (item == 0) { // 카메라
+//                    capture();
+//                    alt_bld.create().dismiss();
+//
+//
+//                } else if (item == 1) { // 갤러리
+//                    gallery();
+//                    alt_bld.create().dismiss();
+//                }
+//            }
+//        });
+//        AlertDialog alert = alt_bld.create();
+//        alert.show();
+//    }
 
     // 사진 uri 값을 통해 상대경로 추출
     public static String UriToPath(Context mContext,Uri photoUri){
@@ -552,6 +559,49 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    private void image_soltlux(){
+        ImageAsyncTask_profile task=new ImageAsyncTask_profile();
+        //base64 인코딩 File f ->String strBase64에 저장
+//        File f = new File("/sdcard/Pictures/pic1.jpg");
+
+
+
+        byte[] bt = new byte[(int) tempFile.length()];
+        FileInputStream fis = null;
+        String strBase64 = "";
+        String id = "boo";
+        try {
+            fis = new FileInputStream(tempFile);
+            fis.read(bt);
+            strBase64 = new String(Base64.encodeBase64(bt));
+        } catch (Exception e) {
+            try {
+                throw e;
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        } finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (IOException e) {
+
+            } catch (Exception e) {
+
+            }
+
+        }
+        //솔트룩스 API 사용
+        try {
+            simil=task.execute(strBase64,id).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+//        Toast.makeText(getApplicationContext(), "" +simil , Toast.LENGTH_LONG).show();
+    }
 
 
 

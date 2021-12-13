@@ -39,16 +39,19 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
+import org.apache.commons.codec.binary.Base64;
 
 public class Alcohol_Detected_Activity extends AppCompatActivity {
 
-    private String uid;
+    private String uid, now_user;
     private ImageView iv_default_img, iv_camera;
     private Button btn_image_analysis;
-
+    Float simil = null;
     // 파이어베이스
     private FirebaseAuth mAuth ;
     private FirebaseDatabase firebaseDatabase;
@@ -91,6 +94,7 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 capture();
+
             }
         });
 
@@ -117,14 +121,69 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(Alcohol_Detected_Activity.this, Image_Analysis_Activity.class);
-                        intent.putExtra("uid", uid); // 사용자 고유 uid
-                        intent.putExtra("image", byteArray);
 
-                        startActivity(intent);
+                        ImageAsyncTask_compare task = new ImageAsyncTask_compare();
+
+//                        File f = new File("/sdcard/Pictures/pic1.jpg");
+
+                        byte[] bt = new byte[(int) tempFile.length()];
+                        FileInputStream fis = null;
+                        String strBase64 = "";
+                        String id = "boo";
+                        try {
+                            fis = new FileInputStream(tempFile);
+                            fis.read(bt);
+                            strBase64 = new String(Base64.encodeBase64(bt));
+                        } catch (Exception e) {
+                            try {
+                                throw e;
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
+                        } finally {
+                            try {
+                                if (fis != null) {
+                                    fis.close();
+                                }
+                            } catch (IOException e) {
+
+                            } catch (Exception e) {
+
+                            }
+
+                        }
+                        //솔트룩스 API 사용
+                        try {
+                            simil=task.execute(strBase64,id).get();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(getApplicationContext(), "" +simil , Toast.LENGTH_SHORT).show();
+
+                        if(simil >= 50.0){
+                            customProgressDialog.dismiss();
+                            now_user = "차주";
+                            Intent intent = new Intent(Alcohol_Detected_Activity.this, Image_Analysis_Activity.class);
+                            intent.putExtra("uid", uid); // 사용자 고유 uid
+                            intent.putExtra("image", byteArray);
+                            intent.putExtra("현재사용자", now_user);
+                            startActivity(intent);
+                        }
+                        else {
+                            customProgressDialog.dismiss();
+                            now_user = "차주가 아님";
+                            Intent intent = new Intent(Alcohol_Detected_Activity.this, Image_Analysis_Activity.class);
+                            intent.putExtra("uid", uid); // 사용자 고유 uid
+                            intent.putExtra("image", byteArray);
+                            intent.putExtra("현재사용자", now_user);
+                            startActivity(intent);
+                        }
+
 
                     }
-                }, 2500);
+                }, 1000);
 
 
             }

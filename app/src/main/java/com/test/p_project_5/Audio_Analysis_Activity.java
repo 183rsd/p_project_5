@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -80,6 +82,7 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
     String sen1, sen2, reason;
     Float simil = null;
 
+
     // 파이어베이스
     private FirebaseAuth mAuth ;
     private FirebaseDatabase firebaseDatabase;
@@ -93,7 +96,7 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
     EditText txtInMsg;
     EditText txtSystem;
     TextView tv_audio_analysis;
-    String[] strData = {"안", "안녕", "안녕하", "안녕하세", "안녕하세요"};
+    String[] strData = {"테스트입니다", "테스트입니다", "테스트입니다", "테스트입니다", "테스트입니다"};
 
     // 로딩
     Analysis_Loading_Activity customProgressDialog;
@@ -111,6 +114,9 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
 
         tv_audio_analysis = findViewById(R.id.tv_audio_analysis);
         randomText();
+
+        customProgressDialog = new Analysis_Loading_Activity(this);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.getReference();
@@ -143,16 +149,32 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if(simil>=80.0){
-                    Intent intent = new Intent(Audio_Analysis_Activity.this, Drunk_No_Activity.class);
-                    intent.putExtra("uid", uid); // 사용자 고유 uid
-                    startActivity(intent);
+                    customProgressDialog.show();
+                    Handler mHandler = new Handler();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(Audio_Analysis_Activity.this, Drunk_No_Activity.class);
+                            intent.putExtra("uid", uid); // 사용자 고유 uid
+                            startActivity(intent);
+                        }
+                    }, 2500);
+
                 }
                 else if(simil<79.9){
                     reason = "음성 분석";
-                    Intent intent = new Intent(Audio_Analysis_Activity.this, Drunk_Yes_Activity.class);
-                    intent.putExtra("uid", uid); // 사용자 고유 uid
-                    intent.putExtra("이유", reason);
-                    startActivity(intent);
+                    customProgressDialog.show();
+                    Handler mHandler = new Handler();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(Audio_Analysis_Activity.this, Drunk_Yes_Activity.class);
+                            intent.putExtra("uid", uid); // 사용자 고유 uid
+                            intent.putExtra("이유", reason);
+                            startActivity(intent);
+                        }
+                    }, 2500);
+
                 }
             }
         });

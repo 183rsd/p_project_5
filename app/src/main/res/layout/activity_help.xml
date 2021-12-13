@@ -29,14 +29,77 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/border_layout"
         android:backgroundTint="#fff"
+        android:orientation="vertical"
         android:scrollbars="vertical"
-        android:orientation="vertical">
+        android:textAlignment="center">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="aa\nbb\ncc\ndd\nee\nff\ngg\nhh\naa"
-            android:textSize="50sp"/>
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/harmonyfont"
+                android:text="서비스 정보"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/harmonyfont"
+                android:text="본 어플리케이션은 차량 내부에 있는 알코올 센서를 이용해\n사용자의 음주운전을 예방하는 어플리케이션입니다. \n센서를 통해 알코올이 인식되면 차량 운행에 제한이 걸리며\n 몇 가지의 검사를 통과하면 운행 제한이 해제됩니다."
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/harmonyfont"
+                android:text="사용 방법"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/harmonyfont"
+                android:text="1. 센서가 알코올을 인식하면 운행 제한이 걸리며 어플리케이션이 실행됩니다.\n\n2. 현재 사용자의 얼굴을 촬영하여 기존에 등록된 사용자인지 비교합니다.\n\n3. (2)에서 촬영한 사진으로 표정 분석을 진행하여 음주 상태를 체크합니다. \n\n4. (3)을 통과할 시 타이핑 검사를 통해 음주 상태를 체크합니다. \n\n5. (4)를 통과하면 (2)에서의 결과에 따라 기존에 등록된 사용자라면 보폭 검사를, \n아니라면 음성 검사를 실시합니다.\n\n6. 각 단계에서 음주 상태로 판별될 경우 운행 제한은 해제되지 않으며 \n미리 지정된 비상연락망으로 연결됩니다.\n\n7. 마지막 검사까지 통과하면 운행 제한이 해제되며 차량 운행이 가능해지게 됩니다."
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/harmonyfont"
+                android:text="Contact"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/harmonyfont"
+                android:text="팀장 표재학(201733850)\n\n팀원 손영재(201433808)\n\n팀원 전규현(201736024)\n\n팀원 전민종(201736025)"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+        </LinearLayout>
 
 
     </ScrollView>

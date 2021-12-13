@@ -29,12 +29,8 @@
             android:layout_height="wrap_content"
             android:textSize="40dp"
             android:text="표정분석 실패"/>
-        <Button
-            android:id="@+id/go_voice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="40dp"
-            android:text="음성인식 ㄱ"/>
+
+
     </LinearLayout>
 
 

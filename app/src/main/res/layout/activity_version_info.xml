@@ -29,13 +29,28 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/border_layout"
         android:backgroundTint="#fff"
-        android:scrollbars="vertical"
-        android:orientation="vertical">
-        <TextView
+        android:orientation="vertical"
+        android:scrollbars="vertical">
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="aa\nbb\ncc\ndd\nee\nff\ngg\nhh\naa"
-            android:textSize="50sp"/>
+            android:layout_gravity="start"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/harmonyfont"
+                android:text="Release Date : 2021.12.15. v0.01 : 어플리케이션 출시"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
 
     </ScrollView>
 

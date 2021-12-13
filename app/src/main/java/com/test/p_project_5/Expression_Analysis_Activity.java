@@ -49,16 +49,5 @@ public class Expression_Analysis_Activity extends AppCompatActivity {
             }
         });
 
-        go_voice = findViewById(R.id.go_voice);
-        go_voice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Expression_Analysis_Activity.this, Audio_Analysis_Activity.class);
-                intent.putExtra("uid", uid); // 사용자 고유 uid
-                intent.putExtra("현재사용자", now_user); // 사용자 고유 uid
-                intent.putExtra("이유", reason);
-                startActivity(intent);
-            }
-        });
     }
 }

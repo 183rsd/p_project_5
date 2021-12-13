@@ -7,14 +7,19 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,12 +31,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.apache.commons.codec.binary.Base64;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class Image_Analysis_Activity extends AppCompatActivity {
     private ImageView iv_analysis_default, iv_analysis_now;
+    private TextView tv_img_analysis;
     // 파이어베이스
     private FirebaseAuth mAuth ;
     private FirebaseDatabase firebaseDatabase;
@@ -40,6 +50,8 @@ public class Image_Analysis_Activity extends AppCompatActivity {
     private Button go_expression_analysis, go_expression_analysis2;
     private String uid, now_user;
     private Bitmap bitmap;
+    // 로딩
+    Analysis_Loading_Activity customProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +60,16 @@ public class Image_Analysis_Activity extends AppCompatActivity {
 
         iv_analysis_default = findViewById(R.id.iv_analysis_default);
         iv_analysis_now = findViewById(R.id.iv_analysis_now);
+        tv_img_analysis = findViewById(R.id.tv_img_analysis);
+
+        customProgressDialog = new Analysis_Loading_Activity(this);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Bundle bundle = getIntent().getExtras();
         uid = bundle.getString("uid");
+        now_user = bundle.getString("현재사용자");
+
+        tv_img_analysis.setText("이미지 비교 결과 : "+now_user);
 
         byte[] byteArray = getIntent().getByteArrayExtra("image");
         bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
@@ -69,11 +88,39 @@ public class Image_Analysis_Activity extends AppCompatActivity {
         go_expression_analysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                now_user = "차주";
-                Intent intent = new Intent(Image_Analysis_Activity.this, Expression_Analysis_Activity.class);
-                intent.putExtra("uid", uid); // 사용자 고유 uid
-                intent.putExtra("현재사용자",now_user);
-                startActivity(intent);
+                if(now_user.equals("차주")){
+                    customProgressDialog.show();
+                    Handler mHandler = new Handler();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            customProgressDialog.dismiss();
+                            Toast.makeText(Image_Analysis_Activity.this, "표정분석 통과", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Image_Analysis_Activity.this, Typing_Test_Activity.class);
+                            intent.putExtra("uid", uid); // 사용자 고유 uid
+                            intent.putExtra("현재사용자",now_user);
+                            startActivity(intent);
+                        }
+                    }, 2500);
+
+                }
+                else{
+                    customProgressDialog.show();
+                    Handler mHandler = new Handler();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            customProgressDialog.dismiss();
+                            Toast.makeText(Image_Analysis_Activity.this, "표정분석 통과", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Image_Analysis_Activity.this, Typing_Test_Activity.class);
+                            intent.putExtra("uid", uid); // 사용자 고유 uid
+                            intent.putExtra("현재사용자",now_user);
+                            startActivity(intent);
+                        }
+                    }, 2500);
+                }
+
+
             }
         });
 //        go_expression_analysis2 = findViewById(R.id.go_expression_analysis2);

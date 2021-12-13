@@ -26,7 +26,7 @@ public class Typing_Test_Activity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private int x=0, y=5;
     int randomNum;
-    String[] strData = {"a", "c", "b", "d", "e"};
+    String[] strData = {"테스트", "테스트", "테스트", "테스트", "테스트"};
     private long backKeyPressedTime = 0;
     //다음 액티비티로 넘어가기 위해 먼저 자기 자신을 선언
     public static Activity typing_Test_Activity;
@@ -100,14 +100,14 @@ public class Typing_Test_Activity extends AppCompatActivity {
                 //입력칸, 시간, 문자열 활성화
                 if(random_text.getText().toString().equals(edit1.getText().toString())){
                     if(now_user.equals("차주")){
-                        Toast.makeText(getApplicationContext(),"테스트 통과. 다음 테스트 진행",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"타이핑 테스트 통과",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(getApplicationContext(), StepSensor_Activity.class);
                         intent.putExtra("uid", uid); // 사용자 고유 uid
                         intent.putExtra("현재사용자",now_user);
                         startActivity(intent);
                     }
-                    else if (now_user.equals("다른사람")){
-                        Toast.makeText(getApplicationContext(),"테스트 통과. 다음 테스트 진행",Toast.LENGTH_SHORT).show();
+                    else if (now_user.equals("차주가 아님")){
+                        Toast.makeText(getApplicationContext(),"타이핑 테스트 통과",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(getApplicationContext(), Audio_Analysis_Activity.class);
                         intent.putExtra("uid", uid); // 사용자 고유 uid
                         intent.putExtra("현재사용자",now_user);

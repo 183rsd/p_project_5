@@ -103,7 +103,7 @@
             android:layout_centerHorizontal="false"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="차주 or 차주아님"
+            android:text="현재 사용자"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -117,7 +117,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/custom_btn3"
-            android:text="해당 사진으로 표정 분석 진행"
+            android:text="표정 분석 진행"
             android:textSize="14sp" />
     </LinearLayout>
 

@@ -38,10 +38,12 @@ import java.util.Locale;
 public class StepSensor_Activity extends AppCompatActivity implements SensorEventListener {
     Handler handler = new Handler();
     // 로딩
-    GPS_Waiting_Dialog_Activity customProgressDialog;
 
     private GpsTracker gpsTracker;
 
+
+    // 로딩 다이얼로그
+    Analysis_Loading_Activity customProgressDialog;
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
@@ -80,10 +82,10 @@ public class StepSensor_Activity extends AppCompatActivity implements SensorEven
         uid = intent.getStringExtra("uid");
         now_user = intent.getStringExtra("현재사용자");
 
-        startTimer();
-
-        customProgressDialog = new GPS_Waiting_Dialog_Activity(this);
+        customProgressDialog = new Analysis_Loading_Activity(this);
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        startTimer();
 
         tvStepDetector = (TextView)findViewById(R.id.tvStepDetector);
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
@@ -213,24 +215,38 @@ public class StepSensor_Activity extends AppCompatActivity implements SensorEven
                                         AutoClick();
                                         tvStepDetector.setText("현재 걸음 수 : 10");
 
+                                        customProgressDialog.show();
+                                        Handler mHandler = new Handler();
+                                        mHandler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                customProgressDialog.dismiss();
+                                                Toast.makeText(StepSensor_Activity.this, "보폭분석 통과", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(StepSensor_Activity.this, Drunk_No_Activity.class);
+                                                intent.putExtra("uid", uid); // 사용자 고유 uid
+                                                intent.putExtra("현재사용자",now_user);
+                                                startActivity(intent);
+                                            }
+                                        }, 2500);
 
-                                        Intent intent = new Intent(StepSensor_Activity.this, Drunk_No_Activity.class);
-                                        intent.putExtra("a", a);
-                                        intent.putExtra("b", b);
-                                        intent.putExtra("c", c);
-                                        intent.putExtra("d", d);
-                                        intent.putExtra("e", e);
-                                        intent.putExtra("f", f);
-                                        intent.putExtra("g", g);
-                                        intent.putExtra("h", h);
-                                        intent.putExtra("i", i);
-                                        intent.putExtra("ii", ii);
-                                        startActivity(intent);
+
+//                                        Intent intent = new Intent(StepSensor_Activity.this, Drunk_No_Activity.class);
+//                                        intent.putExtra("a", a);
+//                                        intent.putExtra("b", b);
+//                                        intent.putExtra("c", c);
+//                                        intent.putExtra("d", d);
+//                                        intent.putExtra("e", e);
+//                                        intent.putExtra("f", f);
+//                                        intent.putExtra("g", g);
+//                                        intent.putExtra("h", h);
+//                                        intent.putExtra("i", i);
+//                                        intent.putExtra("ii", ii);
+//                                        startActivity(intent);
                                     }
                                 }
                             });
                             try {
-                                Thread.sleep(2000); //딜레이 타임 조절
+                                Thread.sleep(500); //딜레이 타임 조절
                             }catch (
                                     InterruptedException e) {
                                 e.printStackTrace();
