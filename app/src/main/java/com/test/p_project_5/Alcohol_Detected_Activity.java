@@ -11,8 +11,10 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,16 +42,20 @@ import org.jetbrains.annotations.NotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 import org.apache.commons.codec.binary.Base64;
 
 public class Alcohol_Detected_Activity extends AppCompatActivity {
 
     private String uid, now_user;
-    private ImageView iv_default_img, iv_camera;
+    private ImageView iv_camera, iv_camera_img;
     private Button btn_image_analysis;
     Float simil = null;
     // 파이어베이스
@@ -61,6 +67,10 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
     private File tempFile = null;
     Uri photoUri;
     private static final int PICK_FROM_CAMERA = 2;
+
+    Handler handler = new Handler();
+    int z = 0;
+
 
     // 로딩
     Analysis_Loading_Activity customProgressDialog;
@@ -75,6 +85,10 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
 
+
+        StartTimer();
+
+
         customProgressDialog = new Analysis_Loading_Activity(this);
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -86,17 +100,9 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference(); // 파이어베이스 realtim database에서 정보 가져오기
 
 
-//        iv_default_img = findViewById(R.id.iv_default_img);
 
-        // 카메라로 사진 촬영
         iv_camera = findViewById(R.id.iv_camera);
-        iv_camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                capture();
-
-            }
-        });
+        iv_camera_img = findViewById(R.id.iv_camera_img);
 
 
         getFireBaseProfileImage(uid);
@@ -108,7 +114,11 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
                 customProgressDialog.show();
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                Bitmap bitmap = ((BitmapDrawable)iv_camera.getDrawable()).getBitmap();
+                Bitmap bitmap = ((BitmapDrawable)iv_camera_img.getDrawable()).getBitmap();
+
+                String s = saveBitmapToJpg(bitmap, uid); // 파일경로
+
+
                 float scale = (float) (1024/(float)bitmap.getWidth());
                 int image_w = (int) (bitmap.getWidth() * scale);
                 int image_h = (int) (bitmap.getHeight() * scale);
@@ -123,13 +133,13 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
                     public void run() {
 
                         ImageAsyncTask_compare task = new ImageAsyncTask_compare();
+//                        File f = new File(s);
 
-//                        File f = new File("/sdcard/Pictures/pic1.jpg");
 
                         byte[] bt = new byte[(int) tempFile.length()];
                         FileInputStream fis = null;
                         String strBase64 = "";
-                        String id = "boo";
+                        String id = "owner";
                         try {
                             fis = new FileInputStream(tempFile);
                             fis.read(bt);
@@ -160,7 +170,8 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        Toast.makeText(getApplicationContext(), "" +simil , Toast.LENGTH_SHORT).show();
+//                        // 유사도 수치
+//                        Toast.makeText(getApplicationContext(), "" +simil , Toast.LENGTH_SHORT).show();
 
                         if(simil >= 50.0){
                             customProgressDialog.dismiss();
@@ -169,6 +180,7 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
                             intent.putExtra("uid", uid); // 사용자 고유 uid
                             intent.putExtra("image", byteArray);
                             intent.putExtra("현재사용자", now_user);
+                            intent.putExtra("유사도",simil);
                             startActivity(intent);
                         }
                         else {
@@ -178,6 +190,7 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
                             intent.putExtra("uid", uid); // 사용자 고유 uid
                             intent.putExtra("image", byteArray);
                             intent.putExtra("현재사용자", now_user);
+                            intent.putExtra("유사도",simil);
                             startActivity(intent);
                         }
 
@@ -251,8 +264,10 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
         }
         if (requestCode == PICK_FROM_CAMERA) {
             // 카메라를 통해 가져온 사진(크롭된사진) uri는 getRealPathFromUri함수를 통해 절대경로 추출.
-            Glide.with(this).load(photoUri).into(iv_camera);
-            btn_image_analysis.setEnabled(true);
+            Glide.with(this).load(photoUri).into(iv_camera_img);
+            iv_camera.setVisibility(View.INVISIBLE);
+            iv_camera_img.setVisibility(View.VISIBLE);
+
 
         }
     }
@@ -285,5 +300,58 @@ public class Alcohol_Detected_Activity extends AppCompatActivity {
             }
         });
     }
+
+    private void StartTimer(){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (z = 0; z <= 3; z++) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(String.valueOf(z).equals("1")){
+                                iv_camera.setImageResource(R.drawable.two);
+                            }
+                            if(String.valueOf(z).equals("2")){
+                                iv_camera.setImageResource(R.drawable.one);
+                            }
+                            if(String.valueOf(z).equals("3")){
+                                capture();
+                                iv_camera.setVisibility(View.INVISIBLE);
+                                iv_camera_img.setVisibility(View.VISIBLE);
+
+                            }
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000); //딜레이 타임 조절
+                    }catch (
+                            InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            //textview6_address.setText(Double.toString(DistanceByDegreeAndroid(latitude2, longitude2, latitude, longitude))+"cm");
+        }).start();
+    }
+
+    public String saveBitmapToJpg(Bitmap bitmap, String name){
+        File storage = getCacheDir();
+        String fileName = name + ".jpg";
+        File imgFile = new File(storage, fileName);
+        try{
+            imgFile.createNewFile();
+            FileOutputStream out = new FileOutputStream(imgFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, out);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return getCacheDir() + "/" + fileName;
+    }
+
 
 }

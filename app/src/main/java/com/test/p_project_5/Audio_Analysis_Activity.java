@@ -96,7 +96,7 @@ public class Audio_Analysis_Activity extends AppCompatActivity {
     EditText txtInMsg;
     EditText txtSystem;
     TextView tv_audio_analysis;
-    String[] strData = {"테스트입니다", "테스트입니다", "테스트입니다", "테스트입니다", "테스트입니다"};
+    String[] strData = {"테스트 문장입니다", "테스트 문장입니다", "테스트 문장입니다", "테스트 문장입니다", "테스트 문장입니다"};
 
     // 로딩
     Analysis_Loading_Activity customProgressDialog;

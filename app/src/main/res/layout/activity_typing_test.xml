@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/harmonyfont"
-        android:text="타이핑 검사"
+        android:text="타이핑 테스트"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="타이핑 검사를 진행합니다. (5회 제한)"
+            android:text="타이핑 테스트를 진행합니다. (5회 제한)"
             android:textColor="@color/black"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="@+id/status"

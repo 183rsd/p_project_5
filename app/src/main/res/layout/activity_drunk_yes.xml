@@ -48,10 +48,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:fontFamily="@font/harmonyfont"
             android:gravity="center_horizontal"
             android:text="사유"
-            android:textColor="#000000"
+            android:textColor="#ED0B0B"
             android:textSize="20sp" />
         <TextView
             android:layout_width="wrap_content"
@@ -68,7 +69,7 @@
             android:layout_width="470dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/border_layout"
             android:orientation="horizontal">
@@ -80,6 +81,7 @@
                 android:layout_weight="0.15"
                 android:text="연락처1"
                 android:textAlignment="center"
+                android:layout_gravity="center"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -90,15 +92,16 @@
                 android:layout_weight="0.5"
                 android:text="01012341234"
                 android:textAlignment="center"
+                android:layout_gravity="center"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/drunk_btn_call1_dialog"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="0.2"
-                android:background="@drawable/custom_btn3"
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_weight="0.1"
+                android:background="@drawable/call_green"
                 android:fontFamily="@font/harmonyfont"
                 android:text="전화걸기"
                 android:textSize="14sp" />
@@ -119,6 +122,7 @@
                 android:layout_weight="0.15"
                 android:text="연락처2"
                 android:textAlignment="center"
+                android:layout_gravity="center"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -128,18 +132,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="01045674567"
+                android:layout_gravity="center"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/drunk_btn_call2_dialog"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="0.2"
-                android:background="@drawable/custom_btn3"
-                android:fontFamily="@font/harmonyfont"
-                android:text="전화걸기" />
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_weight="0.1"
+                android:background="@drawable/call_green"
+                android:fontFamily="@font/harmonyfont" />
         </LinearLayout>
 
         <Button
@@ -150,7 +154,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/custom_btn3"
             android:fontFamily="@font/harmonyfont"
-            android:text="테스트 다시시작"
+            android:text="테스트 재진행"
             android:textSize="14sp" />
     </LinearLayout>
 

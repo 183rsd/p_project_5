@@ -83,17 +83,33 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="기존에 등록된 이미지"
+                android:text="프로필 사진"
+                android:fontFamily="@font/harmonyfont"
+                android:textColor="@color/black"
                 android:textAlignment="center" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="촬영된 이미지"
+                android:fontFamily="@font/harmonyfont"
+                android:textColor="@color/black"
+                android:text="현재 사진"
                 android:textAlignment="center" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_simil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="유사도"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:visibility="invisible"
+            android:fontFamily="@font/harmonyfont"/>
+
 
         <TextView
             android:id="@+id/tv_img_analysis"
@@ -101,24 +117,27 @@
             android:layout_height="35dp"
             android:layout_below="@id/layout_image_analysis_text"
             android:layout_centerHorizontal="false"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="현재 사용자"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textColor="#B60404"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/go_expression_analysis"
-            android:layout_width="250dp"
+            android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_below="@+id/tv_img_analysis"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/custom_btn3"
+            android:fontFamily="@font/harmonyfont"
             android:text="표정 분석 진행"
             android:textSize="14sp" />
+
+
     </LinearLayout>
 
 </RelativeLayout>

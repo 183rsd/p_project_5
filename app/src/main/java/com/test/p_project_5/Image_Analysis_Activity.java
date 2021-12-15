@@ -41,14 +41,15 @@ import java.util.concurrent.ExecutionException;
 
 public class Image_Analysis_Activity extends AppCompatActivity {
     private ImageView iv_analysis_default, iv_analysis_now;
-    private TextView tv_img_analysis;
+    private TextView tv_img_analysis, tv_simil;
     // 파이어베이스
     private FirebaseAuth mAuth ;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference mDatabase;
 
     private Button go_expression_analysis, go_expression_analysis2;
-    private String uid, now_user;
+    private String uid, now_user, reason;
+    private float simil = (float) 0.0;
     private Bitmap bitmap;
     // 로딩
     Analysis_Loading_Activity customProgressDialog;
@@ -61,6 +62,7 @@ public class Image_Analysis_Activity extends AppCompatActivity {
         iv_analysis_default = findViewById(R.id.iv_analysis_default);
         iv_analysis_now = findViewById(R.id.iv_analysis_now);
         tv_img_analysis = findViewById(R.id.tv_img_analysis);
+        tv_simil = findViewById(R.id.tv_simil);
 
         customProgressDialog = new Analysis_Loading_Activity(this);
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -68,8 +70,11 @@ public class Image_Analysis_Activity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         uid = bundle.getString("uid");
         now_user = bundle.getString("현재사용자");
+        simil = bundle.getFloat("유사도");
 
-        tv_img_analysis.setText("이미지 비교 결과 : "+now_user);
+
+        tv_simil.setText("유사도 : "+simil+"%");
+        tv_img_analysis.setText("비교 결과 : "+now_user);
 
         byte[] byteArray = getIntent().getByteArrayExtra("image");
         bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
@@ -94,11 +99,13 @@ public class Image_Analysis_Activity extends AppCompatActivity {
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            reason = "표정 분석 불통과";
                             customProgressDialog.dismiss();
                             Toast.makeText(Image_Analysis_Activity.this, "표정분석 통과", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Image_Analysis_Activity.this, Typing_Test_Activity.class);
                             intent.putExtra("uid", uid); // 사용자 고유 uid
                             intent.putExtra("현재사용자",now_user);
+                            intent.putExtra("이유",reason);
                             startActivity(intent);
                         }
                     }, 2500);
@@ -110,11 +117,13 @@ public class Image_Analysis_Activity extends AppCompatActivity {
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            reason = "표정 분석 불통과";
                             customProgressDialog.dismiss();
                             Toast.makeText(Image_Analysis_Activity.this, "표정분석 통과", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Image_Analysis_Activity.this, Typing_Test_Activity.class);
                             intent.putExtra("uid", uid); // 사용자 고유 uid
                             intent.putExtra("현재사용자",now_user);
+                            intent.putExtra("이유",reason);
                             startActivity(intent);
                         }
                     }, 2500);

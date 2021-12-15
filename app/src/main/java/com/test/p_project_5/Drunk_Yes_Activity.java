@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +25,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class Drunk_Yes_Activity extends AppCompatActivity{
     private TextView drunk_tv_call1, drunk_tv_call2, drunk_tv_reason;
-    private Button drunk_btn_call1_dialog,drunk_btn_call2_dialog, btn_restart;
+    private Button btn_restart;
+    private ImageButton drunk_btn_call1_dialog, drunk_btn_call2_dialog;
 
     String uid, call1, call2, tel, reason;
 

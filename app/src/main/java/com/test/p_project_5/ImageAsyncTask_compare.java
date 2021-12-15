@@ -47,7 +47,7 @@ public class ImageAsyncTask_compare extends AsyncTask<String,String,Float> {
 
                 JSONObject jsonBody = new JSONObject();
                 // 사용자 키
-                jsonBody.put("key", "394ff0eb-4b02-45bd-9bdb-9469c625a784");
+                jsonBody.put("key", "9fd1c735-3dc2-4c4d-9410-2b05202705b4");
                 // 서비스 ID
                 jsonBody.put("serviceId", "01915082929");
 
@@ -55,7 +55,7 @@ public class ImageAsyncTask_compare extends AsyncTask<String,String,Float> {
                 JSONObject argument = new JSONObject();
                 argument.put("data",params[0]);
                 argument.put("regist", false);
-                argument.put("id",params[1]);
+//                argument.put("id",params[1]);
                 jsonBody.put("argument", argument);
 
                 BufferedOutputStream bos = new BufferedOutputStream(connection.getOutputStream());

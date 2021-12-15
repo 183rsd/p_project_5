@@ -26,12 +26,15 @@
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.P_project_5"
         android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true"
         tools:ignore="UnusedAttribute">
+        <activity android:name=".StepActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".Stried_Analysis_Activity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -64,13 +67,9 @@
         <activity
             android:name=".App_Loading_Activity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="landscape">
-            <intent-filter> <!-- 앱 실행 시 가장 먼저 호출되는 액티비티 -->
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:screenOrientation="landscape">
+
         </activity>
         <activity
             android:name=".Analysis_Loading_Activity"
@@ -116,7 +115,15 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape" />
+            android:exported="true"
+            android:screenOrientation="landscape">
+            <intent-filter> <!-- 앱 실행 시 가장 먼저 호출되는 액티비티 -->
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

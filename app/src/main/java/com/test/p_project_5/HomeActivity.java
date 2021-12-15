@@ -104,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
 
     // 이미지
     private Context mContext = this;
-    File file;
+    File file, file1;
     String filePath;
     Uri photoUri, uri_camera;
     private final Boolean isPermisson = true;
@@ -304,7 +304,7 @@ public class HomeActivity extends AppCompatActivity {
         iv_update_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                capture();
+                photoDialogRadio();
             }
         });
 
@@ -314,16 +314,17 @@ public class HomeActivity extends AppCompatActivity {
                 update_Photo();
 //                getFireBaseProfileImage(uid);
                 photo_update_dialog.dismiss();
+                Glide.with(getApplicationContext()).load(filePath).into(iv_user_img);
 
                 image_soltlux();
 
 
                 Toast.makeText(getApplicationContext(), "완료", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(HomeActivity.this, MenuActivity.class);
-                intent.putExtra("nickname", nickname); // 닉네임
-                intent.putExtra("photoUrl", photoUrl); // 프로필사진
-                intent.putExtra("uid", uid); // 사용자 고유 uid
-                startActivity(intent);
+//                Intent intent = new Intent(HomeActivity.this, MenuActivity.class);
+//                intent.putExtra("nickname", nickname); // 닉네임
+//                intent.putExtra("photoUrl", photoUrl); // 프로필사진
+//                intent.putExtra("uid", uid); // 사용자 고유 uid
+//                startActivity(intent);
             }
         });
 
@@ -338,7 +339,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-//      카메라 캡쳐 함수
+    //      카메라 캡쳐 함수
     private void capture() { // takePhoto
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -416,6 +417,8 @@ public class HomeActivity extends AppCompatActivity {
                 Glide.with(this).load(photoUri).into(iv_update_photo);
                 filePath = UriToPath(mContext,photoUri);
 
+                file1 = new File(String.valueOf(filePath));
+
             }catch (Exception e){
 
             }
@@ -429,29 +432,29 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     // 이미지를 어느 방법으로 가져올지 정하는 다이얼로그
-//    private void photoDialogRadio(){
-//        final CharSequence[] PhotoModels = {"카메라로 촬영", "갤러리에서 선택"};
-//        android.app.AlertDialog.Builder alt_bld = new android.app.AlertDialog.Builder(this);
-//
-//        //alt_bld.setIcon(R.drawable.icon);
-//        alt_bld.setTitle("사진 선택");
-//        alt_bld.setItems(R.array.select_photo, new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int item) {
-//                // Toast.makeText(ProfileActivity.this, PhotoModels[item] + "가 선택되었습니다.", Toast.LENGTH_SHORT).show();
-//                if (item == 0) { // 카메라
-//                    capture();
-//                    alt_bld.create().dismiss();
-//
-//
-//                } else if (item == 1) { // 갤러리
-//                    gallery();
-//                    alt_bld.create().dismiss();
-//                }
-//            }
-//        });
-//        AlertDialog alert = alt_bld.create();
-//        alert.show();
-//    }
+    private void photoDialogRadio(){
+        final CharSequence[] PhotoModels = {"카메라로 촬영", "갤러리에서 선택"};
+        android.app.AlertDialog.Builder alt_bld = new android.app.AlertDialog.Builder(this);
+
+        //alt_bld.setIcon(R.drawable.icon);
+        alt_bld.setTitle("사진 선택");
+        alt_bld.setItems(R.array.select_photo, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                // Toast.makeText(ProfileActivity.this, PhotoModels[item] + "가 선택되었습니다.", Toast.LENGTH_SHORT).show();
+                if (item == 0) { // 카메라
+                    capture();
+                    alt_bld.create().dismiss();
+
+
+                } else if (item == 1) { // 갤러리
+                    gallery();
+                    alt_bld.create().dismiss();
+                }
+            }
+        });
+        AlertDialog alert = alt_bld.create();
+        alert.show();
+    }
 
     // 사진 uri 값을 통해 상대경로 추출
     public static String UriToPath(Context mContext,Uri photoUri){
@@ -541,7 +544,7 @@ public class HomeActivity extends AppCompatActivity {
         downloadImg(uid);
     }
 
-     // 이미지 다운로드해서 가져오기
+    // 이미지 다운로드해서 가져오기
     private void downloadImg(String uid){
         FirebaseStorage storage = FirebaseStorage.getInstance(); // 스토리지 인스턴스 생성
         StorageReference storageReference = storage.getReference(); // 스토리지 참조
@@ -566,12 +569,12 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        byte[] bt = new byte[(int) tempFile.length()];
+        byte[] bt = new byte[(int) file1.length()];
         FileInputStream fis = null;
         String strBase64 = "";
-        String id = "boo";
+        String id = "owner";
         try {
-            fis = new FileInputStream(tempFile);
+            fis = new FileInputStream(file1);
             fis.read(bt);
             strBase64 = new String(Base64.encodeBase64(bt));
         } catch (Exception e) {
